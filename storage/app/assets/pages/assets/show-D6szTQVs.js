@@ -1,0 +1,1 @@
+import{h as e}from"./general-DAK3ebw_.js";function n(){e(".content"),$("#showContainer").load(`${_baseURL}/inventories/smart-devices/${_id}/view`,()=>{e(".content",!1)})}document.addEventListener("DOMContentLoaded",function(){document.getElementById("refresh").addEventListener("click",()=>n()),n()});
