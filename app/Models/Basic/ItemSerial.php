@@ -5,9 +5,10 @@ namespace App\Models\Basic;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Support\Facades\Auth;
 
-class CategorySub extends Model
+class ItemSerial extends Model
 {
     use HasUuids;
 
@@ -19,17 +20,22 @@ class CategorySub extends Model
     {
         parent::boot();
 
-        static::creating(function (CategorySub $model) {
+        static::creating(function (ItemSerial $model) {
             $model->created_by = Auth::id();
         });
 
-        static::updating(function (CategorySub $model) {
+        static::updating(function (ItemSerial $model) {
             $model->updated_by = Auth::id();
         });
     }
 
-    public function category(): BelongsTo
+    public function item(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Item::class);
+    }
+
+    public function item_price(): HasOneThrough
+    {
+        return $this->hasOneThrough(ItemPrice::class, ItemConversion::class, 'item_id', 'item_conversion_id', 'item_id', 'item_id')->where('is_default', true);
     }
 }

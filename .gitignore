@@ -25,6 +25,7 @@ Homestead.json
 .phpunit.result.cache
 .idea
 .vscode
+.vscode/settings.json
 
 # vite / asset build
 /public/build
