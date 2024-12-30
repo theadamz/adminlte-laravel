@@ -146,7 +146,7 @@ class UomController extends Controller
 
                 // input validator
                 $validator  = Validator::make($row, [
-                    'code' => ['required', 'string', 'min:1', 'max:10', "regex:" . config("setting.regxp.forCode")],
+                    'code' => ['required', 'string', 'min:1', 'max:5', "regex:" . config("setting.regxp.forCode")],
                     'name' => ['required', 'string', 'min:1', 'max:100'],
                     "is_active" => ["required", "boolean"],
                 ]);

@@ -24,7 +24,7 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'code' => ['required', 'string', "regex:" . config("setting.regxp.forCode")],
+            'code' => ['required', 'string', "max:10", "regex:" . config("setting.regxp.forCode")],
             'name' => ['required', 'string', 'min:3', 'max:100'],
             'is_active' => ['required', 'boolean'],
         ];

@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('uoms', function (Blueprint $table) {
+        Schema::create('warehouses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('code', 5)->unique();
+            $table->string('code', 10)->unique();
             $table->string('name', 50);
+            $table->string('address', 100)->nullable();
+            $table->string('telephone', 20)->nullable();
+            $table->string('fax', 20)->nullable();
             $table->boolean('is_active')->default(true);
             $table->uuid('created_by')->nullable();
             $table->uuid('updated_by')->nullable();
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('uoms');
+        Schema::dropIfExists('warehouses');
     }
 };

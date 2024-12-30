@@ -4,7 +4,7 @@ return [
     'userIdExceptions' => ['00000000-0000-0000-0000-000000000000', '00000000-0000-0000-0000-000000000001'],
     'roleIdExceptions' => ['00000000-0000-0000-0000-000000000000', '00000000-0000-0000-0000-000000000001'],
     'groups' => [
-        ['code' => 'basic', 'name' => 'Basic Data', 'visible' => true],
+        ['code' => 'basic', 'name' => 'Basic', 'visible' => true],
         ['code' => 'setting', 'name' => 'Setting', 'visible' => true],
     ],
     'menus' => [
@@ -13,6 +13,7 @@ return [
         ['group_code' => 'basic', 'parent_menu_code' => 'category-sub', 'code' => 'category-sub', 'name' => 'Sub Categories', 'description' => 'Sub Categories', 'path' => '/basics/category-subs', 'icon' => 'fas fa-level-down-alt', 'visible' => true,  'children' => null],
         ['group_code' => 'basic', 'parent_menu_code' => 'brand', 'code' => 'brand', 'name' => 'Brands', 'description' => 'Brands', 'path' => '/basics/brands', 'icon' => 'fas fa-copyright', 'visible' => true,  'children' => null],
         ['group_code' => 'basic', 'parent_menu_code' => 'uom', 'code' => 'uom', 'name' => 'UOMs', 'description' => 'UOMs', 'path' => '/basics/uoms', 'icon' => 'fas fa-weight', 'visible' => true,  'children' => null],
+        ['group_code' => 'basic', 'parent_menu_code' => 'warehouse', 'code' => 'warehouse', 'name' => 'Warehouses', 'description' => 'Warehouses', 'path' => '/basics/warehouses', 'icon' => 'fas fa-warehouse', 'visible' => true,  'children' => null],
         ['group_code' => 'basic', 'parent_menu_code' => 'item', 'code' => 'item', 'name' => 'Items', 'description' => 'Items', 'path' => '/basics/items', 'icon' => 'fas fa-list', 'visible' => true,  'children' => null],
 
         /* Konfigurasi */
@@ -40,6 +41,7 @@ return [
         ['code' => 'category-sub', 'name' => 'Sub Category', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
         ['code' => 'brand', 'name' => 'Brand', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
         ['code' => 'uom', 'name' => 'UOMs', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
+        ['code' => 'warehouse', 'name' => 'Warehouse', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
         ['code' => 'item', 'name' => 'Items', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
 
         /* Configurations */
@@ -51,6 +53,6 @@ return [
         ['code' => 'config-user-access', 'name' => 'Menu Configurations - User Accesses', 'permissions' => ['read', 'create', 'edit', 'delete']],
     ],
     'userList' => [
-        ['code' => 'product', 'name' => 'Items', 'permissions' => ['uom-conversion']],
+        ['code' => 'item', 'name' => 'Items', 'permissions' => ['uom-conversion', 'sell-price']],
     ],
 ];

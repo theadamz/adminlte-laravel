@@ -77,7 +77,21 @@ AdminLTE laravel web admin with roles, permissions, accessses and code samples.
     php artisan view:cache
     ```
 
--   When you pull new change from git rebuild the asset javascript with pnpm build :
+-   When you pull new change from git rebuild the asset ajvasc :
+
+## Use laragon portable
+
+-   Open terminal and set it to www/your-project-folder and type below command :
+
+    ```
+    ..\..\bin\cmder\cmder.bat
+    or
+    ../../bin/cmder/cmder.bat
+    ```
+
+-   Check with cmd below, it will show php version if it's correct :
+
+    `php -v`
 
 ## Cheatsheet
 
@@ -99,7 +113,7 @@ AdminLTE laravel web admin with roles, permissions, accessses and code samples.
 
 -   Seed specific seeder (use this when you add new access in config/access.php file)
 
-    `php artisan db:seed --class=RoleAccessSeeder`
+    `php artisan db:seed --class=AccessSeeder`
 
 -   Clear database and migrate with seed (ONLY USE THIS IN DEVELOPMENT ENVIRONMENT/STAGE)
 
@@ -108,3 +122,9 @@ AdminLTE laravel web admin with roles, permissions, accessses and code samples.
 -   Migrate specific table / migration :
 
     `php artisan migrate:refresh --path=/database/migrations/0001_01_01_000003_create_jobs_table.php`
+
+-   Run specific schedule :
+
+    `php artisan schedule:test`
+
+    Select index of list (0,1,2 etc) then press enter

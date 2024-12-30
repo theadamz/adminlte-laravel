@@ -4,12 +4,15 @@
         @endif
     </label>
     <div class="input-group fv-row">
-        <input type="hidden" id="{{ $hiddenElementId }}" name="{{ $hiddenElementName }}" readonly />
+        <input type="text" class="d-none" id="{{ $hiddenElementId }}" name="{{ $hiddenElementName }}"
+            value="{{ $hiddenElementValue }}" readonly />
         <input type="text" placeholder="{{ $placeholder }}" id="{{ $elementId }}" name="{{ $elementName }}"
-            autocomplete="off" value="" class="form-control rounded-left font-weight-normal bg-white" readonly>
-        <div class="input-group-append">
-            <button type="button" class="btn btn-outline-secondary input-group-text" id="{{ $searchButtonName }}"
-                name="{{ $searchButtonName }}"><i class="fas fa-search"></i></button>
+            value="{{ $elementValue }}" class="form-control rounded-left font-weight-normal bg-white" autocomplete="off"
+            readonly />
+        <div class="input-group-append rounded-right">
+            <button type="button"
+                class="btn btn-outline-secondary input-group-text @if (!$clearButtonShow) rounded-right @endif"
+                id="{{ $searchButtonName }}" name="{{ $searchButtonName }}"><i class="fas fa-search"></i></button>
             @if ($clearButtonShow)
                 <button type="button" class="btn btn-outline-secondary input-group-text" id="{{ $clearButtonName }}"
                     name="{{ $clearButtonName }}"><i class="fas fa-times"></i></button>
@@ -24,7 +27,7 @@
     @endif
 </div>
 
-@push('list-of-values')
+@push('scripts')
     <script type="module">
         import("{{ $data['jsFile'] }}").then(module => {
             let {{ $hiddenElementName }} = null;
@@ -54,7 +57,7 @@
                                 .{{ $hiddenElementColumnName }};
 
                             $(`#{{ $hiddenElementId }}`).val($resultFromLOV.data
-                                .{{ $hiddenElementColumnName }})
+                                .{{ $hiddenElementColumnName }});
                             $(`#{{ $elementId }}`).val($resultFromLOV.data
                                 .{{ $elementColumnName }});
                             @if (!empty($columnNameForDescription))

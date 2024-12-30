@@ -7,7 +7,7 @@ function closeModal() {
     $('#_table_data_lov tbody').off('dblclick');
     $('#_modal_lov').off('hidden.bs.modal');
     _dataTableLOV.destroy();
-    $("#_dynamicContent").empty();
+    $("#_dynamic_content").empty();
 }
 
 function createHeaderTable(data) {
@@ -24,14 +24,14 @@ function createHeaderTable(data) {
 }
 
 function initDataTableLOV() {
-    // Tambahkan kolom untuk pilih data
+    // add column to select data
     DT_columns.push({
         "data": null,
         "width": 40,
         "className": "text-center"
     });
 
-    // Tambahkan column defs untuk pilih data
+    // add column defs to select data
     DT_definitions.push({
         "targets": -1,
         "orderable": false,
@@ -41,7 +41,7 @@ function initDataTableLOV() {
         },
     });
 
-    // Inisialisasi datatable
+    // initialize datatable
     _dataTableLOV = $('#_table_data_lov').DataTable({
         "pageLength": 5,
         "pagingType": "simple",
@@ -76,15 +76,15 @@ function initDataTableLOV() {
         }
     });
 
-    // DataTable search
+    // dataTable search
     initDataTableSearch(_dataTableLOV, '[aria-controls="_table_data_lov"]');
 }
 
 function sendValues(idx) {
-    // Check if rows not empty
+    // check if rows not empty
     if (_dataTableLOV.data().count() <= 0) return;
 
-    // Set result
+    // set result
     $resultFromLOV = {
         result: true,
         data: _dataTableLOV.row(idx).data()

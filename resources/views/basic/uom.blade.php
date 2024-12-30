@@ -121,7 +121,7 @@
                                         <span class="text-danger">*</span></label>
                                     <input type="text" id="code" name="code"
                                         class="form-control font-weight-normal" placeholder="Code" value=""
-                                        maxlength="10" autocomplete="off" />
+                                        maxlength="5" autocomplete="off" />
                                 </div>
                             </div>
                             <div class="col-md-12">

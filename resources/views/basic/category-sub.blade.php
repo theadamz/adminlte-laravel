@@ -102,8 +102,7 @@
     <!-- /.content -->
 
     <!--begin::Modal - Form Input-->
-    <div class="modal" tabindex="-1" id="modalFormInput" data-backdrop="static" data-keyboard="false"
-        data-focus="false" aria-hidden="true">
+    <div class="modal" tabindex="-1" id="modalFormInput" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content position-absolute">
                 <div class="modal-header align-items-center">
@@ -153,8 +152,7 @@
 
     @can('category-sub-import')
         <!--begin::Modal - Form Import-->
-        <div class="modal" tabindex="-1" id="modalFormImport" data-backdrop="static" data-keyboard="false"
-            data-focus="false" aria-hidden="true">
+        <div class="modal" tabindex="-1" id="modalFormImport" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered modal-md">
                 <div class="modal-content position-absolute">
                     <div class="modal-header align-items-center">
@@ -218,8 +216,7 @@
     @endcan
 
     <!--begin::Modal - Form Filter-->
-    <div class="modal" tabindex="-1" id="modalFormFilter" data-backdrop="static" data-keyboard="false"
-        data-focus="false" aria-hidden="true">
+    <div class="modal" tabindex="-1" id="modalFormFilter" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content position-absolute">
                 <div class="modal-header align-items-center">

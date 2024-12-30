@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 // category
 Route::prefix("categories")->middleware(['access:category'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Basic\CategoryController::class, 'index'])->can('category');

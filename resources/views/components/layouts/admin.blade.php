@@ -54,6 +54,7 @@
             @vite($fileLocation)
         @endforeach
         <link href="{{ url('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+        @stack('styles')
     @endonce
     @vite([])
 </head>
@@ -139,7 +140,7 @@
         @endforeach
         <!--end::Custom Javascript-->
         <!--end::Javascript-->
-        @stack('list-of-values')
+        @stack('scripts')
     @endonce
 </body>
 

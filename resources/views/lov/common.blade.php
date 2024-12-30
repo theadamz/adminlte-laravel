@@ -1,5 +1,5 @@
 <div class="modal" id="_modal_lov" tabindex="-1" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content position-absolute">
             <div class="modal-header">
                 <h3 class="modal-title">{{ $data['title'] }}</h3>
