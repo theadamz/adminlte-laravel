@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Basic;
 use App\Helpers\GeneralHelper;
 use App\Helpers\OpenSpoutHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Basic\CategoryRequest;
-use App\Models\Basic\Category;
+use App\Http\Requests\Basic\WarehouseLocationRequest;
+use App\Models\Basic\Warehouse;
+use App\Models\Basic\WarehouseLocation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
@@ -22,48 +23,58 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoryController extends Controller
+class WarehouseLocationController extends Controller
 {
-    protected string $templateName = "template_categories.xlsx";
+    protected string $templateName = "template_warehouse_locations.xlsx";
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(string $warehouseId): View
     {
+        // check if warehouse exist
+        if (!Warehouse::where('id', $warehouseId)->exists()) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
         // js
         GeneralHelper::addAdditionalJS([
-            'resources/js/pages/basic/category.js'
+            'resources/js/pages/basic/warehouse-location.js'
         ]);
 
         // template name
         $templateName = $this->templateName;
 
-        return view('basic.category')->with(compact('templateName'));
+        // get warehouse
+        $warehouseName = Warehouse::where('id', $warehouseId)->value("name");
+
+        // add breadcrumb
+        GeneralHelper::addAdditionalBreadCrumb([$warehouseName, 'Locations']);
+
+        // set title
+        GeneralHelper::setTitle('Warehouse Locations');
+
+        return view('basic.warehouse-location')->with(compact('templateName', 'warehouseId'));
     }
 
-    public function datatable(Request $request): JsonResponse
+    public function datatable(Request $request, string $warehouseId): JsonResponse
     {
-        $queries = Category::selectRaw("id, code, name, is_active")
+        $queries = DB::table("warehouse_locations", "wl")->selectRaw("wl.id, w.name AS warehouse_name, wl.code, wl.name, wl.description, wl.is_active")
+            ->leftJoin("warehouses AS w", "w.id", "=", "wl.warehouse_id")
+            ->where('wl.warehouse_id', $warehouseId)
             ->when($request->filled('is_active'), function ($query) use ($request) {
-                return $query->where('is_active', filter_var($request->get('is_active'), FILTER_VALIDATE_BOOLEAN));
+                return $query->where('wl.is_active', filter_var($request->get('is_active'), FILTER_VALIDATE_BOOLEAN));
             });
 
-        return DataTables::eloquent($queries)->toJson();
+        return DataTables::query($queries)->toJson();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CategoryRequest $request): JsonResponse
+    public function store(WarehouseLocationRequest $request): JsonResponse
     {
         // validate request
         $validated = $request->validated();
 
         // check for duplicate
-        $exist = Category::where(function (Builder $query) use ($validated) {
+        $exist = WarehouseLocation::where(function (Builder $query) use ($validated) {
             $query->whereRaw('LOWER(code)=?', [str($validated['code'])->lower()]);
-        })->exists();
+        })->where('warehouse_id', $validated['warehouse'])->exists();
 
         // if exist then
         if ($exist) {
@@ -79,13 +90,14 @@ class CategoryController extends Controller
         }
 
         // save
-        $data = new Category($validated);
+        $data = new WarehouseLocation($validated);
+        $data->warehouse_id = $validated['warehouse'];
         $data->save();
 
         return response()->json(["message" => "Data successfully created."])->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function storeImport(Request $request, OpenSpoutHelper $openSpout): JsonResponse
+    public function storeImport(Request $request, OpenSpoutHelper $openSpout, string $warehouseId): JsonResponse
     {
         // Prepare input
         $input = [
@@ -143,9 +155,10 @@ class CategoryController extends Controller
                     'N' => false,
                     default => null,
                 };
+                $row['warehouse'] = $warehouseId;
 
                 // input validator
-                $validator = Validator::make($row, (new CategoryRequest())->rules());
+                $validator = Validator::make($row, (new WarehouseLocationRequest())->rules());
 
                 // if fails
                 if ($validator->fails()) {
@@ -163,7 +176,7 @@ class CategoryController extends Controller
                 $validated = $validator->getData();
 
                 // get data
-                $isExist = Category::whereRaw("LOWER(code)=?", [str($validated['code'])->lower()])->exists();
+                $isExist = WarehouseLocation::whereRaw("LOWER(code)=?", [str($validated['code'])->lower()])->where('warehouse_id', $warehouseId)->exists();
 
                 // if exist then skip
                 if ($isExist) {
@@ -178,9 +191,11 @@ class CategoryController extends Controller
                 }
 
                 // create new data
-                Category::create([
+                WarehouseLocation::create([
+                    'warehouse_id' => $warehouseId,
                     'code' => $validated['code'],
                     'name' => $validated['name'],
+                    'description' => $validated['description'],
                     'is_active' => $validated['is_active'],
                 ]);
 
@@ -213,18 +228,15 @@ class CategoryController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): JsonResponse
+    public function show(string $warehouseId, string $id): JsonResponse
     {
         // validate parameter
         $validated = Validator::make(['id' => $id], [
-            'id' => ['required', "uuid", Rule::exists("categories", 'id')],
+            'id' => ['required', "uuid", Rule::exists("warehouse_locations", 'id')->where('warehouse_id', $warehouseId)],
         ])->validated();
 
         // get data
-        $data = Category::where('id', $validated['id'])->select(['code', 'name', 'is_active'])->first();
+        $data = WarehouseLocation::where('id', $validated['id'])->where('warehouse_id', $warehouseId)->select(['code', 'name', 'description', 'is_active'])->first();
 
         // if data empty
         if (empty($data)) {
@@ -236,18 +248,15 @@ class CategoryController extends Controller
         return response()->json(['message' => Response::$statusTexts[Response::HTTP_OK], 'data' => $data])->setStatusCode(Response::HTTP_OK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(CategoryRequest $request)
+    public function update(WarehouseLocationRequest $request): JsonResponse
     {
         // validate request
         $validated = $request->validated();
 
         // check for duplicate
-        $exist = Category::where(function (Builder $query) use ($validated) {
+        $exist = WarehouseLocation::where(function (Builder $query) use ($validated) {
             $query->whereRaw('LOWER(code)=?', [str($validated['code'])->lower()]);
-        })->where('id', '!=', $validated['id'])->exists();
+        })->where('warehouse_id', $validated['warehouse'])->where('id', '!=', $validated['id'])->exists();
 
         // if exist then
         if ($exist) {
@@ -262,29 +271,32 @@ class CategoryController extends Controller
         }
 
         // update
-        $data = Category::find($validated['id']);
+        $data = WarehouseLocation::find($validated['id']);
         $data->fill($validated);
+        $data->warehouse_id = $validated['warehouse'];
         $data->save();
 
         return response()->json(["message" => "Data successfully saved."])->setStatusCode(Response::HTTP_OK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Request $request)
+    public function destroy(Request $request, string $warehouseId): JsonResponse
     {
         // handle input
-        $ids = str($request->post('id'))->isJson() ? ['ids' => json_decode($request->post('id'), true)] : ['ids' => $request->post('id')];
+        $ids = str($request->post('id'))->isJson() ? json_decode($request->post('id'), true) : $request->post('id');
+        $input = [
+            'warehouse' => $warehouseId,
+            'ids' => $ids,
+        ];
 
         // validate request
-        $validated = Validator::make($ids, [
+        $validated = Validator::make($input, [
+            'warehouse' => ['required', "uuid", Rule::exists('warehouses', 'id')],
             'ids' => ['required', "array"],
-            'ids.*' => ['required', "uuid", Rule::exists('categories', 'id')],
+            'ids.*' => ['required', "uuid", Rule::exists('warehouse_locations', 'id')->where('warehouse_id', $warehouseId)],
         ])->validated();
 
         try {
-            Category::whereIn('id', $validated['ids'])->delete();
+            WarehouseLocation::whereIn('id', $validated['ids'])->delete();
 
             return response()->json(["message" => count($validated['ids']) . " data successfully deleted."])->setStatusCode(Response::HTTP_OK);
         } catch (\Exception $e) {
@@ -295,20 +307,23 @@ class CategoryController extends Controller
         }
     }
 
-    public function export(Request $request, OpenSpoutHelper $openSpout): JsonResponse
+    public function export(Request $request, OpenSpoutHelper $openSpout, string $warehouseId): JsonResponse
     {
         // prepare input
         $input = [
+            'warehouse' => $warehouseId,
             'is_active' => empty($request->post('is_active')) ? null : filter_var($request->post('is_active'), FILTER_VALIDATE_BOOLEAN),
         ];
 
         // validate input
         $validated  = Validator::make($input, [
+            'warehouse' => ['required', "uuid", Rule::exists('warehouses', 'id')],
             "is_active" => ["nullable", "boolean"],
         ])->validated();
 
         // create query
-        $query = Category::select(['code', 'name', 'is_active'])
+        $query = WarehouseLocation::select(['code', 'name', 'description', 'is_active', 'warehouse_id'])->where('warehouse_id', $validated['warehouse'])
+            ->with('warehouse:id,name')
             ->when(!is_null($validated['is_active']), function ($query) use ($validated) {
                 return $query->where('is_active', filter_var($validated['is_active'], FILTER_VALIDATE_BOOLEAN));
             });
@@ -323,19 +338,22 @@ class CategoryController extends Controller
 
             // replace value
             $record['is_active'] = $record['is_active'] ? 'Yes' : 'No';
+            $record['warehouse_name'] = $record['warehouse']['name'];
 
             return $record;
         }, $records);
 
         // variables
-        $fileName = now()->format('YmdHis') . "_basics_categories.xlsx";
+        $fileName = now()->format('YmdHis') . "_basics_warehouse_locations.xlsx";
         $url = route('download-temp-file', ['fileNameEncoded' => base64_encode($fileName)]);
 
         // columns header
         $columns = [
             'no' => ['text' => 'No.', 'type' => 'serial', 'align' => 'left'],
+            'warehouse_name' => ['text' => 'Warehouse', 'type' => 'string', 'align' => 'left'],
             'code' => ['text' => 'Code', 'type' => 'string', 'align' => 'left'],
             'name' => ['text' => 'Name', 'type' => 'string', 'align' => 'left'],
+            'description' => ['text' => 'Description', 'type' => 'string', 'align' => 'left'],
             'is_active' => ['text' => 'Active', 'type' => 'string', 'align' => 'left'],
         ];
 
@@ -349,18 +367,19 @@ class CategoryController extends Controller
         return response()->json(["url" => $url])->setStatusCode(Response::HTTP_OK);
     }
 
-    public function lov(Request $request): View
+    public function lov(Request $request, string $warehouseId): View
     {
         // modal
-        $data['title'] = 'Category List';
-        $data['srcURL'] = route('dt.basics.categories');
+        $data['title'] = 'Warehouse Location List';
+        $data['srcURL'] = route('dt.basics.warehouses.locations', ['warehouseId' => $warehouseId]);
         $data['initSearch'] = $request->get('search');
         $data['queryParameters'] = Arr::query(['is_active' => $request->get('is_active') ?? true]);
 
         // datatable
-        $data['columnHeaders'] = ['#', 'Code', 'Name'];
+        $data['columnHeaders'] = ['#', 'Warehouse', 'Code', 'Name'];
         $data['columns'] = [
             ['data' => 'id', 'orderable' => false, 'visible' => false],
+            ['data' => 'warehouse_name', 'name' => 'w.name', 'orderable' => true],
             ['data' => 'code', 'orderable' => true],
             ['data' => 'name', 'orderable' => true],
         ];

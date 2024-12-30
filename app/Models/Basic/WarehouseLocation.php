@@ -4,6 +4,7 @@ namespace App\Models\Basic;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
 class WarehouseLocation extends Model
@@ -25,5 +26,10 @@ class WarehouseLocation extends Model
         static::updating(function (WarehouseLocation $model) {
             $model->updated_by = Auth::id();
         });
+    }
+
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 }

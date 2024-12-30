@@ -6,7 +6,7 @@
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <div class="d-flex flex-row justify-content-center align-items-center">
-                <span class="nav-link text-bold">{{ $menu['name'] }}</span>
+                <span class="nav-link text-bold">{{ $title ?? $menu['name'] }}</span>
                 <div class="border-left text-center">&nbsp;</div>
                 {!! app()->general->createBreadCrumbHtml($menuData, $menu['code']) !!}
             </div>

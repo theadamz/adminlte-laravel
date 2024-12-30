@@ -45,3 +45,23 @@ Route::prefix("uoms")->middleware(['access:uom'])->group(function () {
     Route::post('/imports', [\App\Http\Controllers\Basic\UomController::class, 'storeImport'])->can('uom-import');
     Route::post('/exports', [\App\Http\Controllers\Basic\UomController::class, 'export'])->can('uom-export');
 });
+
+// warehouse
+Route::prefix("warehouses")->middleware(['access:warehouse'])->group(function () {
+    Route::get('/', [\App\Http\Controllers\Basic\WarehouseController::class, 'index'])->can('warehouse')->name('basic.warehouses.index');
+    Route::post('/', [\App\Http\Controllers\Basic\WarehouseController::class, 'store'])->can('warehouse-create');
+    Route::get('/{id}', [\App\Http\Controllers\Basic\WarehouseController::class, 'show'])->can('warehouse-read');
+    Route::put('/{id}', [\App\Http\Controllers\Basic\WarehouseController::class, 'update'])->can('warehouse-edit');
+    Route::delete('/', [\App\Http\Controllers\Basic\WarehouseController::class, 'destroy'])->can('warehouse-delete');
+    Route::post('/imports', [\App\Http\Controllers\Basic\WarehouseController::class, 'storeImport'])->can('warehouse-import');
+    Route::post('/exports', [\App\Http\Controllers\Basic\WarehouseController::class, 'export'])->can('warehouse-export');
+
+    // warehouse location
+    Route::get('/{warehouseId}/locations', [\App\Http\Controllers\Basic\WarehouseLocationController::class, 'index'])->can('warehouse-location');
+    Route::post('/{warehouseId}/locations', [\App\Http\Controllers\Basic\WarehouseLocationController::class, 'store'])->can('warehouse-location-create');
+    Route::get('/{warehouseId}/locations/{id}', [\App\Http\Controllers\Basic\WarehouseLocationController::class, 'show'])->can('warehouse-location-read');
+    Route::put('/{warehouseId}/locations/{id}', [\App\Http\Controllers\Basic\WarehouseLocationController::class, 'update'])->can('warehouse-location-edit');
+    Route::delete('/{warehouseId}/locations', [\App\Http\Controllers\Basic\WarehouseLocationController::class, 'destroy'])->can('warehouse-location-delete');
+    Route::post('/{warehouseId}/locations/imports', [\App\Http\Controllers\Basic\WarehouseLocationController::class, 'storeImport'])->can('warehouse-location-import');
+    Route::post('/{warehouseId}/locations/exports', [\App\Http\Controllers\Basic\WarehouseLocationController::class, 'export'])->can('warehouse-location-export');
+});

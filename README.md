@@ -99,7 +99,7 @@ AdminLTE laravel web admin with roles, permissions, accessses and code samples.
 
 -   Seed specific seeder (use this when you add new access in config/access.php file)
 
-    `php artisan db:seed --class=AccessSeeder`
+    `php artisan db:seed --class=RoleAccessSeeder`
 
 -   Clear database and migrate with seed (ONLY USE THIS IN DEVELOPMENT ENVIRONMENT/STAGE)
 

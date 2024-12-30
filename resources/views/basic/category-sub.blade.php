@@ -125,7 +125,7 @@
                             </div>
                             <div class="col-md-12">
                                 <x-inputs.textbox label="Name" :is-required="true" element-name="name"
-                                    :max-length="100" />
+                                    :max-length="50" />
                             </div>
                             <div class="col-md-12">
                                 <x-inputs.checkbox label="Active" element-name="is_active" value="true" />

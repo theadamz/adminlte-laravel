@@ -4,6 +4,7 @@ namespace App\Models\Basic;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
 class Warehouse extends Model
@@ -25,5 +26,10 @@ class Warehouse extends Model
         static::updating(function (Warehouse $model) {
             $model->updated_by = Auth::id();
         });
+    }
+
+    public function warehouse_locations(): HasMany
+    {
+        return $this->hasMany(WarehouseLocation::class);
     }
 }

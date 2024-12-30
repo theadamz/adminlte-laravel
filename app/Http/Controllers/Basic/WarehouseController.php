@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Basic;
 use App\Helpers\GeneralHelper;
 use App\Helpers\OpenSpoutHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Basic\CategoryRequest;
-use App\Models\Basic\Category;
+use App\Http\Requests\Basic\WarehouseRequest;
+use App\Models\Basic\Warehouse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
@@ -22,29 +22,26 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoryController extends Controller
+class WarehouseController extends Controller
 {
-    protected string $templateName = "template_categories.xlsx";
+    protected string $templateName = "template_warehouses.xlsx";
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         // js
         GeneralHelper::addAdditionalJS([
-            'resources/js/pages/basic/category.js'
+            'resources/js/pages/basic/warehouse.js'
         ]);
 
         // template name
         $templateName = $this->templateName;
 
-        return view('basic.category')->with(compact('templateName'));
+        return view('basic.warehouse')->with(compact('templateName'));
     }
 
     public function datatable(Request $request): JsonResponse
     {
-        $queries = Category::selectRaw("id, code, name, is_active")
+        $queries = Warehouse::selectRaw("id, code, name, address, telephone, fax, is_active")->withCount('warehouse_locations')
             ->when($request->filled('is_active'), function ($query) use ($request) {
                 return $query->where('is_active', filter_var($request->get('is_active'), FILTER_VALIDATE_BOOLEAN));
             });
@@ -52,16 +49,13 @@ class CategoryController extends Controller
         return DataTables::eloquent($queries)->toJson();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CategoryRequest $request): JsonResponse
+    public function store(WarehouseRequest $request): JsonResponse
     {
         // validate request
         $validated = $request->validated();
 
         // check for duplicate
-        $exist = Category::where(function (Builder $query) use ($validated) {
+        $exist = Warehouse::where(function (Builder $query) use ($validated) {
             $query->whereRaw('LOWER(code)=?', [str($validated['code'])->lower()]);
         })->exists();
 
@@ -79,7 +73,7 @@ class CategoryController extends Controller
         }
 
         // save
-        $data = new Category($validated);
+        $data = new Warehouse($validated);
         $data->save();
 
         return response()->json(["message" => "Data successfully created."])->setStatusCode(Response::HTTP_CREATED);
@@ -145,7 +139,7 @@ class CategoryController extends Controller
                 };
 
                 // input validator
-                $validator = Validator::make($row, (new CategoryRequest())->rules());
+                $validator = Validator::make($row, (new WarehouseRequest())->rules());
 
                 // if fails
                 if ($validator->fails()) {
@@ -163,12 +157,12 @@ class CategoryController extends Controller
                 $validated = $validator->getData();
 
                 // get data
-                $isExist = Category::whereRaw("LOWER(code)=?", [str($validated['code'])->lower()])->exists();
+                $isExist = Warehouse::whereRaw("LOWER(code)=?", [str($validated['code'])->lower()])->exists();
 
                 // if exist then skip
                 if ($isExist) {
                     // add log
-                    $logs .= "Line {$line}:" . PHP_EOL . "Code {$validated['code']} already exist." . PHP_EOL . PHP_EOL;
+                    $logs .= "Line {$line}: Code {$validated['code']} already exist." . PHP_EOL;
 
                     // increment
                     $line++;
@@ -178,17 +172,13 @@ class CategoryController extends Controller
                 }
 
                 // create new data
-                Category::create([
-                    'code' => $validated['code'],
-                    'name' => $validated['name'],
-                    'is_active' => $validated['is_active'],
-                ]);
+                Warehouse::create($row);
 
                 // increment insert
                 $inserted++;
 
                 // add log
-                $logs .= "Line {$line}:" . PHP_EOL . "inserted." . PHP_EOL . PHP_EOL;
+                $logs .= "Line {$line}: inserted." . PHP_EOL;
 
                 // increment
                 $line++;
@@ -213,18 +203,15 @@ class CategoryController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id): JsonResponse
     {
         // validate parameter
         $validated = Validator::make(['id' => $id], [
-            'id' => ['required', "uuid", Rule::exists("categories", 'id')],
+            'id' => ['required', "uuid", Rule::exists("warehouses", 'id')],
         ])->validated();
 
         // get data
-        $data = Category::where('id', $validated['id'])->select(['code', 'name', 'is_active'])->first();
+        $data = Warehouse::where('id', $validated['id'])->select(['code', 'name', 'address', 'telephone', 'fax', 'is_active'])->first();
 
         // if data empty
         if (empty($data)) {
@@ -236,16 +223,13 @@ class CategoryController extends Controller
         return response()->json(['message' => Response::$statusTexts[Response::HTTP_OK], 'data' => $data])->setStatusCode(Response::HTTP_OK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(CategoryRequest $request)
+    public function update(WarehouseRequest $request)
     {
         // validate request
         $validated = $request->validated();
 
         // check for duplicate
-        $exist = Category::where(function (Builder $query) use ($validated) {
+        $exist = Warehouse::where(function (Builder $query) use ($validated) {
             $query->whereRaw('LOWER(code)=?', [str($validated['code'])->lower()]);
         })->where('id', '!=', $validated['id'])->exists();
 
@@ -262,16 +246,13 @@ class CategoryController extends Controller
         }
 
         // update
-        $data = Category::find($validated['id']);
+        $data = Warehouse::find($validated['id']);
         $data->fill($validated);
         $data->save();
 
         return response()->json(["message" => "Data successfully saved."])->setStatusCode(Response::HTTP_OK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request)
     {
         // handle input
@@ -280,11 +261,11 @@ class CategoryController extends Controller
         // validate request
         $validated = Validator::make($ids, [
             'ids' => ['required', "array"],
-            'ids.*' => ['required', "uuid", Rule::exists('categories', 'id')],
+            'ids.*' => ['required', "uuid", Rule::exists('warehouses', 'id')],
         ])->validated();
 
         try {
-            Category::whereIn('id', $validated['ids'])->delete();
+            Warehouse::whereIn('id', $validated['ids'])->delete();
 
             return response()->json(["message" => count($validated['ids']) . " data successfully deleted."])->setStatusCode(Response::HTTP_OK);
         } catch (\Exception $e) {
@@ -308,7 +289,7 @@ class CategoryController extends Controller
         ])->validated();
 
         // create query
-        $query = Category::select(['code', 'name', 'is_active'])
+        $query = Warehouse::select(['code', 'name', 'address', 'telephone', 'fax', 'is_active'])
             ->when(!is_null($validated['is_active']), function ($query) use ($validated) {
                 return $query->where('is_active', filter_var($validated['is_active'], FILTER_VALIDATE_BOOLEAN));
             });
@@ -328,7 +309,7 @@ class CategoryController extends Controller
         }, $records);
 
         // variables
-        $fileName = now()->format('YmdHis') . "_basics_categories.xlsx";
+        $fileName = now()->format('YmdHis') . "_basics_warehouses.xlsx";
         $url = route('download-temp-file', ['fileNameEncoded' => base64_encode($fileName)]);
 
         // columns header
@@ -336,6 +317,9 @@ class CategoryController extends Controller
             'no' => ['text' => 'No.', 'type' => 'serial', 'align' => 'left'],
             'code' => ['text' => 'Code', 'type' => 'string', 'align' => 'left'],
             'name' => ['text' => 'Name', 'type' => 'string', 'align' => 'left'],
+            'address' => ['text' => 'Address', 'type' => 'string', 'align' => 'left'],
+            'telephone' => ['text' => 'Telephone', 'type' => 'string', 'align' => 'left'],
+            'fax' => ['text' => 'Fax', 'type' => 'string', 'align' => 'left'],
             'is_active' => ['text' => 'Active', 'type' => 'string', 'align' => 'left'],
         ];
 
@@ -352,17 +336,18 @@ class CategoryController extends Controller
     public function lov(Request $request): View
     {
         // modal
-        $data['title'] = 'Category List';
-        $data['srcURL'] = route('dt.basics.categories');
+        $data['title'] = 'Warehouse List';
+        $data['srcURL'] = route('dt.basics.warehouses');
         $data['initSearch'] = $request->get('search');
         $data['queryParameters'] = Arr::query(['is_active' => $request->get('is_active') ?? true]);
 
         // datatable
-        $data['columnHeaders'] = ['#', 'Code', 'Name'];
+        $data['columnHeaders'] = ['#', 'Code', 'Name', 'Address'];
         $data['columns'] = [
             ['data' => 'id', 'orderable' => false, 'visible' => false],
             ['data' => 'code', 'orderable' => true],
             ['data' => 'name', 'orderable' => true],
+            ['data' => 'address', 'orderable' => true],
         ];
         $data['columnDefinitions'] = [];
         $data['columnOrders'] = [];

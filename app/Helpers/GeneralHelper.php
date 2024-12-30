@@ -360,6 +360,8 @@ class GeneralHelper
 
         if ($createDummyMenu) {
             View::share('menu', self::generateDummyMenu($title));
+        } else {
+            View::share('title', $title);
         }
     }
 

@@ -145,11 +145,7 @@ class BrandController extends Controller
                 };
 
                 // input validator
-                $validator  = Validator::make($row, [
-                    'code' => ['required', 'string', 'min:1', 'max:10', "regex:" . config("setting.regxp.forCode")],
-                    'name' => ['required', 'string', 'min:3', 'max:100'],
-                    "is_active" => ["required", "boolean"],
-                ]);
+                $validator = Validator::make($row, (new BrandRequest())->rules());
 
                 // if fails
                 if ($validator->fails()) {
@@ -167,12 +163,12 @@ class BrandController extends Controller
                 $validated = $validator->getData();
 
                 // get data
-                $categorySubExist = Brand::whereRaw("LOWER(code)=?", [str($validated['code'])->lower()])->exists();
+                $isExist = Brand::whereRaw("LOWER(code)=?", [str($validated['code'])->lower()])->exists();
 
-                // if not empty then do not insert
-                if ($categorySubExist) {
+                // if exist then skip
+                if ($isExist) {
                     // add log
-                    $logs .= "Line {$line}: Code {$validated['code']} already exist." . PHP_EOL;
+                    $logs .= "Line {$line}:" . PHP_EOL . "Code {$validated['code']} already exist." . PHP_EOL . PHP_EOL;
 
                     // increment
                     $line++;
@@ -192,7 +188,7 @@ class BrandController extends Controller
                 $inserted++;
 
                 // add log
-                $logs .= "Line {$line}: inserted." . PHP_EOL;
+                $logs .= "Line {$line}:" . PHP_EOL . "inserted." . PHP_EOL . PHP_EOL;
 
                 // increment
                 $line++;

@@ -26,7 +26,7 @@ class CategorySubRequest extends FormRequest
         $rules = [
             'category' => ['required', 'string', Rule::exists("categories", "id")],
             'code' => ['required', 'string', "max:20", "regex:" . config("setting.regxp.forCode")],
-            'name' => ['required', 'string', 'min:3', 'max:100'],
+            'name' => ['required', 'string', 'min:3', 'max:50'],
             'is_active' => ['required', 'boolean'],
         ];
 

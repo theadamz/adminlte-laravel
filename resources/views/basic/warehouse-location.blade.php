@@ -4,7 +4,15 @@
         <nav class="navbar navbar-expand navbar-white shadow-sm">
             <!-- Left -->
             <ul class="navbar-nav">
-                @can('brand-create')
+                <li class="nav-item">
+                    <a href="{{ route('basic.warehouses.index') }}" class="btn btn-sm btn-outline-dark" id="back"
+                        name="back">
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="ml-2 d-none d-sm-inline font-weight-bold">Back</span>
+                    </a>
+                </li>
+                <div class="border-left text-center mx-2">&nbsp;</div>
+                @can('warehouse-location-create')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-success" id="create" name="create"
                             data-toggle="modal" data-target="#modalFormInput">
@@ -13,7 +21,7 @@
                         </button>
                     </li>
                 @endcan
-                @can('brand-edit')
+                @can('warehouse-location-edit')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-warning" id="edit" name="edit">
                             <i class="fas fa-edit d-inline"></i>
@@ -21,7 +29,7 @@
                         </button>
                     </li>
                 @endcan
-                @can('brand-delete')
+                @can('warehouse-location-delete')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-danger" id="delete" name="delete">
                             <span class="indicator-label">
@@ -34,7 +42,7 @@
                         </button>
                     </li>
                 @endcan
-                @can('brand-import')
+                @can('warehouse-location-import')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-dark" id="import" name="import"
                             data-toggle="modal" data-target="#modalFormImport">
@@ -43,7 +51,7 @@
                         </button>
                     </li>
                 @endcan
-                @can('brand-export')
+                @can('warehouse-location-export')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-dark" id="export" name="export">
                             <i class="fas fa-file-export d-inline"></i>
@@ -82,8 +90,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Warehouse</th>
                                     <th>Code</th>
                                     <th>Name</th>
+                                    <th>Description</th>
                                     <th class="text-center">Active</th>
                                 </tr>
                             </thead>
@@ -117,11 +127,17 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <x-inputs.textbox label="Code" :is-required="true" element-name="code"
-                                    :max-length="10" />
+                                    :max-length="20" />
                             </div>
                             <div class="col-md-12">
                                 <x-inputs.textbox label="Name" :is-required="true" element-name="name"
                                     :max-length="50" />
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group fv-row">
+                                    <x-inputs.textarea label="Description" element-name="description"
+                                        :rows="3" :max-length="100" />
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <x-inputs.checkbox label="Active" element-name="is_active" value="true" />
@@ -146,7 +162,7 @@
     </div>
     <!--end::Modal - Form Input-->
 
-    @can('brand-import')
+    @can('warehouse-location-import')
         <!--begin::Modal - Form Import-->
         <div class="modal" tabindex="-1" id="modalFormImport" data-backdrop="static" data-keyboard="false"
             data-focus="false" aria-hidden="true">
@@ -257,4 +273,8 @@
         </div>
     </div>
     <!--end::Modal - Form Filter-->
+
+    <script>
+        const warehouseId = '{{ $warehouseId }}';
+    </script>
 </x-layouts.admin>

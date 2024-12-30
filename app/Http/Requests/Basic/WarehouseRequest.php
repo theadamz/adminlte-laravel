@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class BrandRequest extends FormRequest
+class WarehouseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,18 @@ class BrandRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'code' => ['required', 'string', "regex:" . config("setting.regxp.forCode")],
-            'name' => ['required', 'string', 'min:3', 'max:50'],
+            'code' => ['required', 'string', "max:10", "regex:" . config("setting.regxp.forCode")],
+            'name' => ['required', 'string', 'min:1', 'max:50'],
+            'address' => ['nullable', 'string', 'min:1', 'max:100'],
+            'telephone' => ['nullable', 'string', 'max:20'],
+            'fax' => ['nullable', 'string', 'max:20'],
             'is_active' => ['required', 'boolean'],
         ];
 
         // update
         if (in_array($this->method(), ["PUT", "PATCH"])) {
             $rules = array_merge($rules, [
-                "id" => ["required", "uuid", Rule::exists("brands", "id")],
+                "id" => ["required", "uuid", Rule::exists("warehouses", "id")],
             ]);
         }
 

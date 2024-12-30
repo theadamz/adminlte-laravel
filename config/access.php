@@ -42,6 +42,7 @@ return [
         ['code' => 'brand', 'name' => 'Brand', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
         ['code' => 'uom', 'name' => 'UOMs', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
         ['code' => 'warehouse', 'name' => 'Warehouse', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
+        ['code' => 'warehouse-location', 'name' => 'Warehouse Location', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
         ['code' => 'item', 'name' => 'Items', 'permissions' => ['read', 'create', 'edit', 'delete', 'import', 'export']],
 
         /* Configurations */

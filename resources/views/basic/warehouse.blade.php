@@ -4,7 +4,7 @@
         <nav class="navbar navbar-expand navbar-white shadow-sm">
             <!-- Left -->
             <ul class="navbar-nav">
-                @can('brand-create')
+                @can('warehouse-create')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-success" id="create" name="create"
                             data-toggle="modal" data-target="#modalFormInput">
@@ -13,7 +13,7 @@
                         </button>
                     </li>
                 @endcan
-                @can('brand-edit')
+                @can('warehouse-edit')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-warning" id="edit" name="edit">
                             <i class="fas fa-edit d-inline"></i>
@@ -21,7 +21,7 @@
                         </button>
                     </li>
                 @endcan
-                @can('brand-delete')
+                @can('warehouse-delete')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-danger" id="delete" name="delete">
                             <span class="indicator-label">
@@ -34,7 +34,7 @@
                         </button>
                     </li>
                 @endcan
-                @can('brand-import')
+                @can('warehouse-import')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-dark" id="import" name="import"
                             data-toggle="modal" data-target="#modalFormImport">
@@ -43,11 +43,19 @@
                         </button>
                     </li>
                 @endcan
-                @can('brand-export')
+                @can('warehouse-export')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-dark" id="export" name="export">
                             <i class="fas fa-file-export d-inline"></i>
                             <span class="ml-2 d-none d-sm-inline font-weight-bold">Export</span>
+                        </button>
+                    </li>
+                @endcan
+                @can('warehouse-location')
+                    <li class="nav-item mr-2">
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="location" name="location">
+                            <i class="fas fa-archive d-inline"></i>
+                            <span class="ml-2 d-none d-sm-inline font-weight-bold">Locations</span>
                         </button>
                     </li>
                 @endcan
@@ -84,6 +92,10 @@
                                     <th>#</th>
                                     <th>Code</th>
                                     <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Telephone</th>
+                                    <th>Fax</th>
+                                    <th class="text-center">Location Count</th>
                                     <th class="text-center">Active</th>
                                 </tr>
                             </thead>
@@ -124,6 +136,18 @@
                                     :max-length="50" />
                             </div>
                             <div class="col-md-12">
+                                <div class="form-group fv-row">
+                                    <x-inputs.textarea label="Address" element-name="address" :rows="3"
+                                        :max-length="100" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <x-inputs.textbox label="Telephone" element-name="telephone" :max-length="20" />
+                            </div>
+                            <div class="col-md-12">
+                                <x-inputs.textbox label="Fax" element-name="fax" :max-length="20" />
+                            </div>
+                            <div class="col-md-12">
                                 <x-inputs.checkbox label="Active" element-name="is_active" value="true" />
                             </div>
                         </div>
@@ -146,7 +170,7 @@
     </div>
     <!--end::Modal - Form Input-->
 
-    @can('brand-import')
+    @can('warehouse-import')
         <!--begin::Modal - Form Import-->
         <div class="modal" tabindex="-1" id="modalFormImport" data-backdrop="static" data-keyboard="false"
             data-focus="false" aria-hidden="true">

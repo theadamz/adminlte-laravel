@@ -25,7 +25,7 @@ class UomRequest extends FormRequest
     {
         $rules = [
             'code' => ['required', 'string', "max:5", "regex:" . config("setting.regxp.forCode")],
-            'name' => ['required', 'string', 'min:1', 'max:100'],
+            'name' => ['required', 'string', 'min:1', 'max:20'],
             'is_active' => ['required', 'boolean'],
         ];
 

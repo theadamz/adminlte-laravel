@@ -3,7 +3,7 @@
 
 <head>
     <base href="{{ url('/') }}" />
-    <title>{{ $menu['name'] }} - {{ config('setting.general.web_name_short') }}</title>
+    <title>{{ $title ?? $menu['name'] }} - {{ config('setting.general.web_name_short') }}</title>
     <meta charset="utf-8" />
     <meta name="description" content="{{ config('setting.general.web_description') }}" />
     <meta name="keywords" content="{{ config('setting.general.web_keywords') }}" />

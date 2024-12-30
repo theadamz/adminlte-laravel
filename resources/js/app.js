@@ -55,12 +55,16 @@ window.Toast = [];
 window._isMobileBrowser = typeof navigator.userAgentData === "undefined" ? false : navigator.userAgentData.mobile;
 
 // Set idler
-const urlLogin = [_baseURL + '/', _baseURL + '/sign-in'];
-$(document).on("idle.idleTimer", function (event, elem, obj) {
-    if (urlLogin.indexOf(window.location.href) < 0) {
+const urlLogin = [`${_baseURL}/`, `${_baseURL}/sign-in`, `${_baseURL}/login`, `${_baseURL}/sign-out`, `${_baseURL}/logout`];
+if (urlLogin.indexOf(window.location.href) < 0) {
+    $(document).on("idle.idleTimer", function (event, elem, obj) {
         location.replace(_baseURL + '/sign-out');
-    }
-});
+    });
+
+    $(document).idleTimer({
+        timeout: (60000 * 60) * 2 // 2 hours
+    });
+}
 
 // Others
 if (typeof moment !== 'undefined') {

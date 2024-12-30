@@ -116,32 +116,15 @@
                     <form id="formInput" name="formInput" class="form">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group fv-row">
-                                    <label class="form-label font-weight-normal mb-1">Code
-                                        <span class="text-danger">*</span></label>
-                                    <input type="text" id="code" name="code"
-                                        class="form-control font-weight-normal" placeholder="Code" value=""
-                                        maxlength="5" autocomplete="off" />
-                                </div>
+                                <x-inputs.textbox label="Code" :is-required="true" element-name="code"
+                                    :max-length="5" />
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group fv-row">
-                                    <label class="form-label font-weight-normal mb-1">Name <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" id="name" name="name"
-                                        class="form-control font-weight-normal" placeholder="Name" value=""
-                                        maxlength="100" autocomplete="off" />
-                                </div>
+                                <x-inputs.textbox label="Name" :is-required="true" element-name="name"
+                                    :max-length="20" />
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group fv-row">
-                                    <label class="form-label font-weight-normal mb-1">Active</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="true"
-                                            id="is_active" name="is_active" checked />
-                                        <label class="form-check-label" for="is_active">Yes</label>
-                                    </div>
-                                </div>
+                                <x-inputs.checkbox label="Active" element-name="is_active" value="true" />
                             </div>
                         </div>
                     </form>

@@ -17,4 +17,6 @@ Route::prefix('/basics')->group(function () {
     Route::get('/category-subs', [\App\Http\Controllers\Basic\CategorySubController::class, 'datatable'])->name('dt.basics.category-subs');
     Route::get('/brands', [\App\Http\Controllers\Basic\BrandController::class, 'datatable'])->name('dt.basics.brands');
     Route::get('/uoms', [\App\Http\Controllers\Basic\UomController::class, 'datatable'])->name('dt.basics.uoms');
+    Route::get('/warehouses', [\App\Http\Controllers\Basic\WarehouseController::class, 'datatable'])->name('dt.basics.warehouses');
+    Route::get('/warehouses/{warehouseId}/locations', [\App\Http\Controllers\Basic\WarehouseLocationController::class, 'datatable'])->name('dt.basics.warehouses.locations');
 });

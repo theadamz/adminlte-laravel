@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('uoms', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('code', 5)->unique();
-            $table->string('name', 50);
+            $table->string('name', 20);
             $table->boolean('is_active')->default(true);
             $table->uuid('created_by')->nullable();
             $table->uuid('updated_by')->nullable();
