@@ -23,9 +23,8 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
-.idea
-.vscode
-.vscode/settings.json
+/.idea
+/.vscode
 
 # vite / asset build
 /public/build
