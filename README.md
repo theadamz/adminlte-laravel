@@ -77,21 +77,7 @@ AdminLTE laravel web admin with roles, permissions, accessses and code samples.
     php artisan view:cache
     ```
 
--   When you pull new change from git rebuild the asset ajvasc :
-
-## Use laragon portable
-
--   Open terminal and set it to www/your-project-folder and type below command :
-
-    ```
-    ..\..\bin\cmder\cmder.bat
-    or
-    ../../bin/cmder/cmder.bat
-    ```
-
--   Check with cmd below, it will show php version if it's correct :
-
-    `php -v`
+-   When you pull new change from git rebuild the asset javascript pages :
 
 ## Cheatsheet
 
