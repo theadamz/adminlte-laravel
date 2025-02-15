@@ -46,18 +46,21 @@ class UserAccessController extends Controller
             // Looping access_lists
             foreach ($validated['access_lists'] as $accessCode) {
                 // get access list by code
-                $access = collect(config("access.userList"))->firstWhere('code', $accessCode);
+                $access = collect(config("access.userList"))->where('code', $accessCode);
 
                 // if empty then just skip it
-                if (empty($access)) {
+                if ($access->isEmpty()) {
                     continue;
                 }
+
+                // get acess as object
+                $access = (object) $access->first();
 
                 // check if access already exist for the user
                 $isExist = UserAccess::where([
                     ['user_id', '=', $validated['user']],
                     ['code', '=', $accessCode],
-                    ['permission', '=', $access['permissions'][0]],
+                    ['permission', '=', $access->permissions[0]],
                 ])->exists();
 
                 // if access already exist then skip it
@@ -69,7 +72,7 @@ class UserAccessController extends Controller
                 UserAccess::create([
                     'user_id' => $validated['user'],
                     'code' => $accessCode,
-                    'permission' => $access['permissions'][0],
+                    'permission' => $access->permissions[0],
                     'is_allowed' => true
                 ]);
 
@@ -101,10 +104,10 @@ class UserAccessController extends Controller
         }
 
         // get access
-        $accesses = $model->where('user_id', $userId)->orderBy('code')->get(['id', 'user_id', 'code', 'permission', 'is_allowed'])->toArray();
+        $accesses = $model->where('user_id', $userId)->orderBy('code')->get(['id', 'user_id', 'code', 'permission', 'is_allowed']);
 
         // if access empty
-        if (empty($accesses)) {
+        if ($accesses->isEmpty()) {
             return response()->json(['message' => 'Not found', 'data' => []])->setStatusCode(Response::HTTP_NOT_FOUND);
         }
 
@@ -113,30 +116,31 @@ class UserAccessController extends Controller
         $code = "";
         $prevAccess = [];
         $permissions = [];
+        $accessuserList = collect(config('access.userList'));
 
         // loop
         foreach ($accesses as $idx => $access) {
             // if $idx = 0
             if ($idx === 0) {
-                $code = $access['code'];
+                $code = $access->code;
             }
 
             // if $code not empty or different with incoming data then push it to $data
-            if (!empty($code) && $code !== $access['code']) {
+            if (!empty($code) && $code !== $access->code) {
                 // push to $data
                 $data[] = [
                     'code' => $prevAccess['code'],
-                    'name' => collect(config('access.userList'))->firstWhere('code', $prevAccess['code'])['name'] ?? null,
+                    'name' => $accessuserList->where('code', $prevAccess['code'])->value('name') ?? null,
                     'permissions' => $permissions
                 ];
 
                 // clear $permission and fill $code
                 $permissions = [];
-                $code = $access['code'];
+                $code = $access->code;
             }
 
             // push permission
-            $permissions[$access['permission']] = boolval($access['is_allowed']);
+            $permissions[$access->permission] = boolval($access->is_allowed);
 
             // set code
             $prevAccess = $access;
@@ -145,7 +149,7 @@ class UserAccessController extends Controller
         // push data terakhir ke $data
         $data[] = [
             'code' => $prevAccess['code'],
-            'name' => collect(config('access.userList'))->firstWhere('code', $prevAccess['code'])['name'],
+            'name' => $accessuserList->where('code', $prevAccess['code'])->value('name') ?? null,
             'permissions' => $permissions
         ];
 
@@ -162,26 +166,26 @@ class UserAccessController extends Controller
         }
 
         // get access
-        $accesses = $model->where('user_id', $userId)->where('code', $accessCode)->get(['id', 'code', 'permission', 'is_allowed'])->toArray();
+        $accesses = $model->where('user_id', $userId)->where('code', $accessCode)->get(['id', 'code', 'permission', 'is_allowed']);
 
         // if access empty
-        if (empty($accesses)) {
+        if ($accesses->isEmpty()) {
             return response()->json(['message' => 'Not found', 'data' => []])->setStatusCode(Response::HTTP_NOT_FOUND);
         }
 
         // get access data from config
-        $accessConfig = collect(config('access.userList'))->firstWhere('code', $accessCode);
+        $accessConfig = (object) collect(config('access.userList'))->firstWhere('code', $accessCode);
 
         // loop
         $permissions = [];
-        $permissionsFromConfig = $accessConfig['permissions']; // get access data permissions values
+        $permissionsFromConfig = $accessConfig->permissions; // get access data permissions values
         foreach ($accesses as $access) {
             // search key by parsing value access permission to permissionsFromConfig
-            $key = array_search($access['permission'], $permissionsFromConfig);
+            $key = array_search($access->permission, $permissionsFromConfig);
             unset($permissionsFromConfig[$key]);
 
             // add permission and value is_allowed
-            $permissions[$access['permission']] = boolval($access['is_allowed']);
+            $permissions[$access->permission] = boolval($access->is_allowed);
         }
 
         // loop permissionFromConfig to add the rest of things
@@ -192,8 +196,8 @@ class UserAccessController extends Controller
 
         // data to respon
         $data = [
-            'code' => $access['code'],
-            'name' => $accessConfig['name'],
+            'code' => $access->code,
+            'name' => $accessConfig->name,
             'permissions' => $permissions
         ];
 
@@ -299,7 +303,7 @@ class UserAccessController extends Controller
         }
 
         // get access
-        $accesses = UserAccess::where("user_id", $validated['from_user'])->whereNotIn("code", $validated['exclude_accesses'])->get()->toArray();
+        $accesses = UserAccess::where("user_id", $validated['from_user'])->whereNotIn("code", $validated['exclude_accesses'])->get();
 
         try {
             // begin trans
@@ -310,8 +314,8 @@ class UserAccessController extends Controller
                 // check if access already exist
                 $isExist = UserAccess::where([
                     ['user_id', '=', $validated['to_user']],
-                    ['code', '=', $access['code']],
-                    ['permission', '=', $access['permission']],
+                    ['code', '=', $access->code],
+                    ['permission', '=', $access->permission],
                 ])->exists();
 
                 // if already exist then skip
@@ -322,9 +326,9 @@ class UserAccessController extends Controller
                 // buat data akses
                 UserAccess::create([
                     'user_id' => $validated['to_user'],
-                    'code' => $access['code'],
-                    'permission' => $access['permission'],
-                    'is_allowed' => $access['is_allowed'],
+                    'code' => $access->code,
+                    'permission' => $access->permission,
+                    'is_allowed' => $access->is_allowed,
                 ]);
             }
 

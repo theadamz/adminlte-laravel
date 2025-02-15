@@ -116,6 +116,7 @@ function initDataTable() {
     }).on('draw.dt', function (e, settings, json, xhr) {
         // Datatable checkboxes
         initDataTablesCheckBoxes(_dataTable);
+        showProgressButton(false, '#refresh');
     });
 
     // DataTable search
@@ -193,12 +194,12 @@ function initActions() {
 
     if (elementIsInPage(document.querySelector('#location'))) {
         document.querySelector('#location').addEventListener('click', () => {
-            const id = _dataTable.row({
+            const data = _dataTable.row({
                 selected: true
-            }).data().id;
-            if (!id) return;
+            }).data();
+            if (!data) return;
 
-            location.href = `${_baseURL}/basics/warehouses/${id}/locations`;
+            location.href = `${_baseURL}/basics/warehouses/${data.id}/locations`;
         });
     }
 }
@@ -444,6 +445,7 @@ async function exportData() {
 }
 
 function reloadDataTable(resetPaging = true) {
+    showProgressButton(true, '#refresh');
     _dataTableResetFilter = false;
     _dataTable.ajax.reload(null, resetPaging);
 }

@@ -7,7 +7,7 @@
                 @can('config-role-create')
                     <li class="nav-item mr-2">
                         <button type="button" class="btn btn-sm btn-outline-success" id="create" name="create"
-                            data-toggle="modal" data-target="#modalFormInput">
+                                data-toggle="modal" data-target="#modalFormInput">
                             <i class="fas fa-plus d-inline"></i>
                             <span class="ml-2 d-none d-sm-inline font-weight-bold">Create</span>
                         </button>
@@ -29,7 +29,7 @@
                                 <span class="ml-2 d-none d-sm-inline font-weight-bold">Delete</span>
                             </span>
                             <span class="indicator-progress d-none">
-                                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                <span class="spinner-border spinner-border-sm"></span>
                             </span>
                         </button>
                     </li>
@@ -40,8 +40,13 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mr-2">
                     <button type="button" class="btn btn-sm btn-outline-secondary" id="refresh" name="refresh">
-                        <i class="fas fa-sync d-inline"></i>
-                        <span class="ml-2 d-none d-sm-inline font-weight-bold">Refresh</span>
+                        <span class="indicator-label">
+                            <i class="fas fa-sync d-inline"></i>
+                            <span class="ml-2 d-none d-sm-inline font-weight-bold">Refresh</span>
+                        </span>
+                        <span class="indicator-progress d-none">
+                            <span class="spinner-border spinner-border-sm"></span>
+                        </span>
                     </button>
                 </li>
             </ul>
@@ -77,13 +82,13 @@
 
     <!--begin::Modal - Form Input-->
     <div class="modal" tabindex="-1" id="modalFormInput" data-backdrop="static" data-keyboard="false"
-        data-focus="false" aria-hidden="true">
+         data-focus="false">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content position-absolute">
                 <div class="modal-header align-items-center">
                     <h4 class="modal-title">Form</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span>&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -93,19 +98,19 @@
                             <div class="col-md-12">
                                 <div class="form-group fv-row">
                                     <label class="form-label font-weight-normal mb-1">Name <span
-                                            class="text-danger">*</span></label>
+                                              class="text-danger">*</span></label>
                                     <input type="text" id="name" name="name"
-                                        class="form-control font-weight-normal" placeholder="Name" value=""
-                                        maxlength="50" autocomplete="off" />
+                                           class="form-control font-weight-normal" placeholder="Name" value=""
+                                           maxlength="50" autocomplete="off" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group fv-row">
                                     <label class="form-label font-weight-normal mb-1">Default Path <span
-                                            class="text-danger">*</span></label>
+                                              class="text-danger">*</span></label>
                                     <input type="text" id="def_path" name="def_path"
-                                        class="form-control font-weight-normal" placeholder="Default Path"
-                                        value="" maxlength="255" autocomplete="off" />
+                                           class="form-control font-weight-normal" placeholder="Default Path"
+                                           value="" maxlength="255" autocomplete="off" />
                                 </div>
                             </div>
                         </div>
@@ -114,12 +119,12 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" form="formInput" class="btn btn-default" data-dismiss="modal" id="cancel"
-                        name="cancel"><i class="fa fa-times mr-2"></i> Cancel
+                            name="cancel"><i class="fa fa-times mr-2"></i> Cancel
                     </button>
                     <button type="submit" form="formInput" class="btn btn-success" id="save" name="save">
                         <span class="indicator-label"><i class="fas fa-save mr-2"></i> Save</span>
                         <span class="indicator-progress d-none">
-                            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                            <span class="spinner-border spinner-border-sm"></span>
                         </span>
                     </button>
                 </div>

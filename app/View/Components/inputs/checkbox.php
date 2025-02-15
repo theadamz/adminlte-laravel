@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\inputs;
+namespace App\View\Components\Inputs;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class checkbox extends Component
+class Checkbox extends Component
 {
     /**
      * Create a new component instance.

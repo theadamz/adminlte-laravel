@@ -17,6 +17,10 @@ import {
     showProgressButton
 } from '../../general';
 
+import {
+    lovCommon
+} from '../../application';
+
 let url = null;
 let _formValidationImport = null;
 
@@ -107,6 +111,7 @@ function initDataTable() {
     }).on('draw.dt', function (e, settings, json, xhr) {
         // Datatable checkboxes
         initDataTablesCheckBoxes(_dataTable);
+        showProgressButton(false, '#refresh');
     });
 
     // DataTable search
@@ -162,6 +167,11 @@ function initOtherElements() {
     // FormInput
     $('#modalFormInput').on('hidden.bs.modal', formInputClear);
     initDragableModal('#modalFormInput');
+    lovCommon.init({
+        url: `${_baseURL}/lov/basics/categories?is_active=true`,
+        hiddenElement: '#category',
+        captionElement: '#category_name',
+    });
 }
 
 function initActions() {
@@ -423,6 +433,7 @@ async function exportData() {
 }
 
 function reloadDataTable(resetPaging = true) {
+    showProgressButton(true, '#refresh');
     _dataTableResetFilter = false;
     _dataTable.ajax.reload(null, resetPaging);
 }

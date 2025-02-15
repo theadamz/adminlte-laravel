@@ -475,6 +475,7 @@ function formDuplicateClear() {
 async function retriveRoleAccesses() {
     if (!$('#role').val()) return;
 
+    showProgressButton(true, '#refresh');
     showBlockUIElement('#list_datatable');
 
     // ambil data
@@ -484,6 +485,7 @@ async function retriveRoleAccesses() {
     if (![200].includes(response.status)) {
         _dataTable.clear().draw();
         // MsgBox.HtmlNotification(refactorErrorMessages(response.data), `${response.status} - ${response.statusText}`);
+        showProgressButton(false, '#refresh');
         showBlockUIElement('#list_datatable', false);
         return;
     }
@@ -492,6 +494,7 @@ async function retriveRoleAccesses() {
     _dataTable.clear();
     _dataTable.rows.add(response.data.data).search($('input[type="search"]').val()).draw();
     _datatableClearSelectedValues();
+    showProgressButton(false, '#refresh');
     showBlockUIElement('#list_datatable', false);
 }
 

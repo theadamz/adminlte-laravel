@@ -31,7 +31,7 @@
         <div class="login-box">
             @if (Session::has('notification'))
                 <div class="alert alert-{{ Session::get('notification')['type'] }} alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="alert">×</button>
                     <h5><i class="icon {{ Session::get('notification')['icon'] }}"></i>
                         {{ Session::get('notification')['title'] }}</h5>
                     {{ Session::get('notification')['message'] }}
@@ -56,8 +56,8 @@
                                     </div>
                                 </div>
                                 <input type="text" placeholder="Email" id="email" name="email" maxlength="255"
-                                    value="{{ old('email') ?? '' }}"
-                                    class="form-control @error('email') is-invalid @enderror" autofocus>
+                                       value="{{ old('email') ?? '' }}"
+                                       class="form-control @error('email') is-invalid @enderror" autofocus>
                                 @error('email')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
@@ -67,14 +67,14 @@
                             <div class="input-group">
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-outline-secondary input-group-text"
-                                        id="showPassword" for="password">
+                                            id="showPassword" for="password">
                                         <i class="fas fa-eye"></i>
                                         <i class="fas fa-eye-slash d-none"></i>
                                     </button>
                                 </div>
                                 <input type="password" placeholder="Password" id="password" name="password"
-                                    maxlength="255" autocomplete="off" value="{{ old('password') ?? '' }}"
-                                    class="form-control @error('password') is-invalid @enderror">
+                                       maxlength="255" autocomplete="off" value="{{ old('password') ?? '' }}"
+                                       class="form-control @error('password') is-invalid @enderror">
                                 @error('password')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
@@ -83,16 +83,16 @@
                         <div class="form-group mb-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="remember" name="remember"
-                                    value="1">
+                                       value="1">
                                 <label class="form-check-label text-sm" for="remember">Remember Me</label>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold"
-                                id="signIn" name="signIn">
+                                    id="signIn" name="signIn">
                                 <span class="indicator-label"><i class="fas fa-sign-in-alt mr-2"></i> Sign In</span>
                                 <span class="indicator-progress d-none">
-                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                    <span class="spinner-border spinner-border-sm"></span>
                                 </span>
                             </button>
                         </div>
@@ -117,7 +117,7 @@
                     <div class="d-flex flex-row">
                         <a href="{{ url('/') }}" class="mr-3 font-weight-bold text-sm text-secondary">Home</a>
                         <a href="mailto:theadamz91@gmail.com"
-                            class="font-weight-bold text-sm text-secondary">Contact</a>
+                           class="font-weight-bold text-sm text-secondary">Contact</a>
                     </div>
                 </div>
                 <div class="float-right">
@@ -138,8 +138,7 @@
     <script src="{{ url('assets/vendor/plugins/jquery-validation/additional-methods.min.js') }}"></script>
     @if (config('setting.local.locale_short') !== 'en')
         <script
-            src="{{ url('assets/vendor/plugins/jquery-validation/localization/messages_' . config('setting.local.locale_short') . '.min.js') }}">
-        </script>
+                src="{{ url('assets/vendor/plugins/jquery-validation/localization/messages_' . config('setting.local.locale_short') . '.min.js') }}"></script>
     @endif
     <script src="{{ url('assets/vendor/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ url('assets/js/lib/idle-timer/idle-timer.min.js') }}"></script>

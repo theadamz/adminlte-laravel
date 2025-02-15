@@ -82,6 +82,7 @@ function initDataTable() {
     }).on('draw.dt', function (e, settings, json, xhr) {
         // Datatable checkboxes
         initDataTablesCheckBoxes(_dataTable);
+        showProgressButton(false, '#refresh');
     });
 
     // DataTable search
@@ -278,6 +279,7 @@ async function deleteData() {
 }
 
 function reloadDataTable(resetPaging = true) {
+    showProgressButton(true, '#refresh');
     _dataTableResetFilter = false;
     _dataTable.ajax.reload(null, resetPaging);
 }

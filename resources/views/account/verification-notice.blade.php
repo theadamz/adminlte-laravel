@@ -28,7 +28,7 @@
     <!--select2-->
     <link rel="stylesheet" href="{{ url('assets/vendor/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet"
-        href="{{ url('assets/vendor/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+          href="{{ url('assets/vendor/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     @vite([])
 </head>
 
@@ -38,7 +38,7 @@
             <div class="w-50">
                 @if (Session::has('notification'))
                     <div class="alert alert-{{ Session::get('notification')['type'] }} alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="alert">×</button>
                         <h5><i class="icon {{ Session::get('notification')['icon'] }}"></i>
                             {{ Session::get('notification')['title'] }}</h5>
                         {{ Session::get('notification')['message'] }}
@@ -53,7 +53,7 @@
                     </div>
                     <div class="card-body">
                         <form action="{{ route('verification.send') }}" method="post" id="formResend"
-                            name="formResend">
+                              name="formResend">
                             @csrf
                             <div class="col py-5">
                                 <div class="callout callout-warning">
@@ -64,10 +64,10 @@
                             </div>
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-primary btn-block font-weight-bold" id="resend"
-                                    name="resend">
+                                        name="resend">
                                     <span class="indicator-label"><i class="fas fa-paper-plane mr-2"></i> Resend</span>
                                     <span class="indicator-progress d-none">
-                                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                        <span class="spinner-border spinner-border-sm"></span>
                                     </span>
                                 </button>
                             </div>

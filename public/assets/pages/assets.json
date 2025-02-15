@@ -1,17 +1,17 @@
 {
-  "_application-BtXPZOJh.js": {
-    "file": "assets/application-BtXPZOJh.js",
+  "_application-CIPDdUt4.js": {
+    "file": "assets/application-CIPDdUt4.js",
     "name": "application",
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
   "_axios-DsPaXkF5.js": {
     "file": "assets/axios-DsPaXkF5.js",
     "name": "axios"
   },
-  "_general-DAK3ebw_.js": {
-    "file": "assets/general-DAK3ebw_.js",
+  "_general-EKVRape8.js": {
+    "file": "assets/general-EKVRape8.js",
     "name": "general"
   },
   "resources/css/app.css": {
@@ -20,14 +20,14 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-Cy9NwPCC.js",
+    "file": "assets/app-DWKGUw1S.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_application-BtXPZOJh.js",
+      "_application-CIPDdUt4.js",
       "_axios-DsPaXkF5.js",
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
   "resources/js/application.js": {
@@ -51,47 +51,32 @@
     "src": "resources/js/general.js",
     "isEntry": true
   },
-  "resources/js/pages/account/activity-history.js": {
-    "file": "assets/activity-history-vRZvEDdO.js",
-    "name": "activity-history",
-    "src": "resources/js/pages/account/activity-history.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
   "resources/js/pages/account/change-password.js": {
-    "file": "assets/change-password-BJnT9T95.js",
+    "file": "assets/change-password-6f0d68Bo.js",
     "name": "change-password",
     "src": "resources/js/pages/account/change-password.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
   "resources/js/pages/account/change-profile.js": {
-    "file": "assets/change-profile-B_aHcGT7.js",
+    "file": "assets/change-profile-B7koWLL5.js",
     "name": "change-profile",
     "src": "resources/js/pages/account/change-profile.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/account/change-unit.js": {
-    "file": "assets/change-unit-C6_kgSnn.js",
-    "name": "change-unit",
-    "src": "resources/js/pages/account/change-unit.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
   "resources/js/pages/account/forgot-password.js": {
-    "file": "assets/forgot-password-GdUAUFuu.js",
+    "file": "assets/forgot-password-DOvcCanG.js",
     "name": "forgot-password",
     "src": "resources/js/pages/account/forgot-password.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_general-EKVRape8.js"
+    ]
   },
   "resources/js/pages/account/profile.js": {
     "file": "assets/profile-PK3ycXrp.js",
@@ -99,531 +84,141 @@
     "src": "resources/js/pages/account/profile.js",
     "isEntry": true
   },
-  "resources/js/pages/account/register.js": {
-    "file": "assets/register-Cr_IqbFL.js",
-    "name": "register",
-    "src": "resources/js/pages/account/register.js",
-    "isEntry": true
-  },
   "resources/js/pages/account/reset-password.js": {
-    "file": "assets/reset-password-CwE02CkL.js",
+    "file": "assets/reset-password-ez70GER8.js",
     "name": "reset-password",
     "src": "resources/js/pages/account/reset-password.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_general-EKVRape8.js"
+    ]
   },
   "resources/js/pages/account/sign-in-history.js": {
-    "file": "assets/sign-in-history-Cf5mRD7U.js",
+    "file": "assets/sign-in-history-D7S78MTb.js",
     "name": "sign-in-history",
     "src": "resources/js/pages/account/sign-in-history.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
   "resources/js/pages/account/sign-in.js": {
-    "file": "assets/sign-in-LGVNFimo.js",
+    "file": "assets/sign-in--8TPnq7p.js",
     "name": "sign-in",
     "src": "resources/js/pages/account/sign-in.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
-  "resources/js/pages/client/account/activity-history.js": {
-    "file": "assets/activity-history-CJlVAjmo.js",
-    "name": "activity-history",
-    "src": "resources/js/pages/client/account/activity-history.js",
+  "resources/js/pages/account/sign-up.js": {
+    "file": "assets/sign-up-BYp-KLRb.js",
+    "name": "sign-up",
+    "src": "resources/js/pages/account/sign-up.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
-  "resources/js/pages/client/account/change-password.js": {
-    "file": "assets/change-password-DnSf2TQo.js",
-    "name": "change-password",
-    "src": "resources/js/pages/client/account/change-password.js",
+  "resources/js/pages/account/verification-notice.js": {
+    "file": "assets/verification-notice-C9v4UjPc.js",
+    "name": "verification-notice",
+    "src": "resources/js/pages/account/verification-notice.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
-  "resources/js/pages/client/account/change-profile.js": {
-    "file": "assets/change-profile-XJ4pSxPM.js",
-    "name": "change-profile",
-    "src": "resources/js/pages/client/account/change-profile.js",
+  "resources/js/pages/basic/brand.js": {
+    "file": "assets/brand-Qr_DYHB-.js",
+    "name": "brand",
+    "src": "resources/js/pages/basic/brand.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
-  "resources/js/pages/client/account/profile.js": {
-    "file": "assets/profile-2uafenkO.js",
-    "name": "profile",
-    "src": "resources/js/pages/client/account/profile.js",
-    "isEntry": true
-  },
-  "resources/js/pages/client/account/sign-in-history.js": {
-    "file": "assets/sign-in-history-BDXLNyVZ.js",
-    "name": "sign-in-history",
-    "src": "resources/js/pages/client/account/sign-in-history.js",
+  "resources/js/pages/basic/category-sub.js": {
+    "file": "assets/category-sub-C7LPMuSY.js",
+    "name": "category-sub",
+    "src": "resources/js/pages/basic/category-sub.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js",
+      "_application-CIPDdUt4.js"
     ]
   },
-  "resources/js/pages/client/dashboard.js": {
-    "file": "assets/dashboard-D-nbQjmd.js",
-    "name": "dashboard",
-    "src": "resources/js/pages/client/dashboard.js",
-    "isEntry": true
-  },
-  "resources/js/pages/client/issue/index.js": {
-    "file": "assets/index-Z1SNfJ_U.js",
-    "name": "index",
-    "src": "resources/js/pages/client/issue/index.js",
+  "resources/js/pages/basic/category.js": {
+    "file": "assets/category-BaFMr1Tz.js",
+    "name": "category",
+    "src": "resources/js/pages/basic/category.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
-  "resources/js/pages/client/knowledge/index.js": {
-    "file": "assets/index-BmwpOafv.js",
-    "name": "index",
-    "src": "resources/js/pages/client/knowledge/index.js",
+  "resources/js/pages/basic/uom.js": {
+    "file": "assets/uom-G5n-a1le.js",
+    "name": "uom",
+    "src": "resources/js/pages/basic/uom.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
-  "resources/js/pages/client/request/create-select-purpose.js": {
-    "file": "assets/create-select-purpose-DCG31-mU.js",
-    "name": "create-select-purpose",
-    "src": "resources/js/pages/client/request/create-select-purpose.js",
+  "resources/js/pages/basic/warehouse-location.js": {
+    "file": "assets/warehouse-location-D72m6ceH.js",
+    "name": "warehouse-location",
+    "src": "resources/js/pages/basic/warehouse-location.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
-  "resources/js/pages/client/request/create-select-template.js": {
-    "file": "assets/create-select-template-BCnPE1S3.js",
-    "name": "create-select-template",
-    "src": "resources/js/pages/client/request/create-select-template.js",
+  "resources/js/pages/basic/warehouse.js": {
+    "file": "assets/warehouse-ePLh8YEt.js",
+    "name": "warehouse",
+    "src": "resources/js/pages/basic/warehouse.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/client/request/create-ticket.js": {
-    "file": "assets/create-ticket-D60psjAk.js",
-    "name": "create-ticket",
-    "src": "resources/js/pages/client/request/create-ticket.js",
-    "isEntry": true,
-    "imports": [
-      "_application-BtXPZOJh.js",
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/client/request/edit-ticket.js": {
-    "file": "assets/edit-ticket-CZTw74cZ.js",
-    "name": "edit-ticket",
-    "src": "resources/js/pages/client/request/edit-ticket.js",
-    "isEntry": true,
-    "imports": [
-      "_application-BtXPZOJh.js",
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/client/request/index.js": {
-    "file": "assets/index-Bl2M7fcI.js",
-    "name": "index",
-    "src": "resources/js/pages/client/request/index.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/client/request/view.js": {
-    "file": "assets/view-Bl2M7fcI.js",
-    "name": "view",
-    "src": "resources/js/pages/client/request/view.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
   "resources/js/pages/config/access.js": {
-    "file": "assets/access-CpkpyrM5.js",
+    "file": "assets/access-CsXGM8uH.js",
     "name": "access",
     "src": "resources/js/pages/config/access.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/helpdesk/ticketcategory.js": {
-    "file": "assets/ticketcategory-DMHQBmzz.js",
-    "name": "ticketcategory",
-    "src": "resources/js/pages/config/helpdesk/ticketcategory.js",
-    "isEntry": true,
-    "imports": [
-      "_application-BtXPZOJh.js",
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/helpdesk/ticketemailtemplate.js": {
-    "file": "assets/ticketemailtemplate-CjWJKUf2.js",
-    "name": "ticketemailtemplate",
-    "src": "resources/js/pages/config/helpdesk/ticketemailtemplate.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/helpdesk/ticketpurpose.js": {
-    "file": "assets/ticketpurpose-BGlp_s_e.js",
-    "name": "ticketpurpose",
-    "src": "resources/js/pages/config/helpdesk/ticketpurpose.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/helpdesk/ticketpurposetemplate.js": {
-    "file": "assets/ticketpurposetemplate-0-gC2yIE.js",
-    "name": "ticketpurposetemplate",
-    "src": "resources/js/pages/config/helpdesk/ticketpurposetemplate.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/helpdesk/ticketreplytemplate.js": {
-    "file": "assets/ticketreplytemplate-mK_Q8HOG.js",
-    "name": "ticketreplytemplate",
-    "src": "resources/js/pages/config/helpdesk/ticketreplytemplate.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/brand.js": {
-    "file": "assets/brand-DfMVZMEJ.js",
-    "name": "brand",
-    "src": "resources/js/pages/config/inventory/brand.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/category.js": {
-    "file": "assets/category-h2R5WYGy.js",
-    "name": "category",
-    "src": "resources/js/pages/config/inventory/category.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/certificate.js": {
-    "file": "assets/certificate-ZVkrn36k.js",
-    "name": "certificate",
-    "src": "resources/js/pages/config/inventory/certificate.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/component-name.js": {
-    "file": "assets/component-name-D6-hRc3i.js",
-    "name": "component-name",
-    "src": "resources/js/pages/config/inventory/component-name.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/component.js": {
-    "file": "assets/component-DhHQzXIL.js",
-    "name": "component",
-    "src": "resources/js/pages/config/inventory/component.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/device.js": {
-    "file": "assets/device-wfMbuqJt.js",
-    "name": "device",
-    "src": "resources/js/pages/config/inventory/device.js",
-    "isEntry": true,
-    "imports": [
-      "_application-BtXPZOJh.js",
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/manufacturer.js": {
-    "file": "assets/manufacturer-CvrhhgjH.js",
-    "name": "manufacturer",
-    "src": "resources/js/pages/config/inventory/manufacturer.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/modelasset.js": {
-    "file": "assets/modelasset-Bpr8him3.js",
-    "name": "modelasset",
-    "src": "resources/js/pages/config/inventory/modelasset.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/sub-category.js": {
-    "file": "assets/sub-category-CRA68fL3.js",
-    "name": "sub-category",
-    "src": "resources/js/pages/config/inventory/sub-category.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/inventory/supplier.js": {
-    "file": "assets/supplier-BrNu2BuT.js",
-    "name": "supplier",
-    "src": "resources/js/pages/config/inventory/supplier.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
   "resources/js/pages/config/role.js": {
-    "file": "assets/role-BvoK2Lew.js",
+    "file": "assets/role-qhvSHbsf.js",
     "name": "role",
     "src": "resources/js/pages/config/role.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
-  "resources/js/pages/config/setup/building.js": {
-    "file": "assets/building-DNJx_e0j.js",
-    "name": "building",
-    "src": "resources/js/pages/config/setup/building.js",
+  "resources/js/pages/config/user-access.js": {
+    "file": "assets/user-access-DqwJjh-L.js",
+    "name": "user-access",
+    "src": "resources/js/pages/config/user-access.js",
     "isEntry": true,
     "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/setup/department.js": {
-    "file": "assets/department-CCuYvypJ.js",
-    "name": "department",
-    "src": "resources/js/pages/config/setup/department.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/setup/entity.js": {
-    "file": "assets/entity-B04fE-Z9.js",
-    "name": "entity",
-    "src": "resources/js/pages/config/setup/entity.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/setup/holiday.js": {
-    "file": "assets/holiday-CcjlLiY4.js",
-    "name": "holiday",
-    "src": "resources/js/pages/config/setup/holiday.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/setup/location.js": {
-    "file": "assets/location-3xmKCeyP.js",
-    "name": "location",
-    "src": "resources/js/pages/config/setup/location.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/setup/region.js": {
-    "file": "assets/region-Cw_spEcN.js",
-    "name": "region",
-    "src": "resources/js/pages/config/setup/region.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/config/setup/site.js": {
-    "file": "assets/site-bg6qC_T6.js",
-    "name": "site",
-    "src": "resources/js/pages/config/setup/site.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
+      "_application-CIPDdUt4.js",
+      "_general-EKVRape8.js"
     ]
   },
   "resources/js/pages/config/user.js": {
-    "file": "assets/user-CRom-g5Q.js",
+    "file": "assets/user-Ddyfc1yC.js",
     "name": "user",
     "src": "resources/js/pages/config/user.js",
     "isEntry": true,
     "imports": [
-      "_application-BtXPZOJh.js",
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/os-license/create.js": {
-    "file": "assets/create-BJ5cz-wX.js",
-    "name": "create",
-    "src": "resources/js/pages/inventory/os-license/create.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/os-license/edit.js": {
-    "file": "assets/edit-D9wG8LNU.js",
-    "name": "edit",
-    "src": "resources/js/pages/inventory/os-license/edit.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/os-license/index.js": {
-    "file": "assets/index-ynD26S48.js",
-    "name": "index",
-    "src": "resources/js/pages/inventory/os-license/index.js",
-    "isEntry": true,
-    "imports": [
-      "_application-BtXPZOJh.js",
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/os-license/show-view.js": {
-    "file": "assets/show-view-DP2rzg_V.js",
-    "name": "show-view",
-    "src": "resources/js/pages/inventory/os-license/show-view.js",
-    "isEntry": true
-  },
-  "resources/js/pages/inventory/os-license/show.js": {
-    "file": "assets/show-Keouuzlx.js",
-    "name": "show",
-    "src": "resources/js/pages/inventory/os-license/show.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/other-device/create.js": {
-    "file": "assets/create-B3f2N6in.js",
-    "name": "create",
-    "src": "resources/js/pages/inventory/other-device/create.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/other-device/edit.js": {
-    "file": "assets/edit-DsmkcHTw.js",
-    "name": "edit",
-    "src": "resources/js/pages/inventory/other-device/edit.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/other-device/index.js": {
-    "file": "assets/index-DEStkuzv.js",
-    "name": "index",
-    "src": "resources/js/pages/inventory/other-device/index.js",
-    "isEntry": true,
-    "imports": [
-      "_application-BtXPZOJh.js",
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/other-device/show-view.js": {
-    "file": "assets/show-view-l0sNRNKZ.js",
-    "name": "show-view",
-    "src": "resources/js/pages/inventory/other-device/show-view.js",
-    "isEntry": true
-  },
-  "resources/js/pages/inventory/other-device/show.js": {
-    "file": "assets/show-DAk8XmIy.js",
-    "name": "show",
-    "src": "resources/js/pages/inventory/other-device/show.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/other-license/index.js": {
-    "file": "assets/index-B7ej-T3k.js",
-    "name": "index",
-    "src": "resources/js/pages/inventory/other-license/index.js",
-    "isEntry": true,
-    "imports": [
-      "_application-BtXPZOJh.js",
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/smart-devices/create.js": {
-    "file": "assets/create-CutyfYdX.js",
-    "name": "create",
-    "src": "resources/js/pages/inventory/smart-devices/create.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/smart-devices/edit.js": {
-    "file": "assets/edit-Bvk1cQjp.js",
-    "name": "edit",
-    "src": "resources/js/pages/inventory/smart-devices/edit.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/smart-devices/index.js": {
-    "file": "assets/index-DVodu1ye.js",
-    "name": "index",
-    "src": "resources/js/pages/inventory/smart-devices/index.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/inventory/smart-devices/show-view.js": {
-    "file": "assets/show-view-K6Dvbx-E.js",
-    "name": "show-view",
-    "src": "resources/js/pages/inventory/smart-devices/show-view.js",
-    "isEntry": true
-  },
-  "resources/js/pages/inventory/smart-devices/show.js": {
-    "file": "assets/show-D6szTQVs.js",
-    "name": "show",
-    "src": "resources/js/pages/inventory/smart-devices/show.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
-    ]
-  },
-  "resources/js/pages/knowledge.js": {
-    "file": "assets/knowledge-BlUhJYj6.js",
-    "name": "knowledge",
-    "src": "resources/js/pages/knowledge.js",
-    "isEntry": true,
-    "imports": [
-      "_general-DAK3ebw_.js"
+      "_general-EKVRape8.js"
     ]
   },
   "resources/js/pages/lov/common.js": {

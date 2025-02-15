@@ -1,5 +1,5 @@
 import {
-    initSelect2User
+    select2TemplateOptions
 } from "../../application";
 import {
     _datatableClearSelectedValues,
@@ -9,6 +9,7 @@ import {
     initDataTableSearch,
     initDragableModal,
     initSelect2,
+    initselect2AjaxCustomOption,
     isObjectEmpty,
     MsgBox,
     refactorErrorMessages,
@@ -143,7 +144,7 @@ function initFormValidation() {
 }
 
 function initOtherElements() {
-    initSelect2User('#user', "Select", null, false);
+    initselect2AjaxCustomOption("#user", "Select", `${_baseURL}/options/configs/users`, null, select2TemplateOptions.userResult, select2TemplateOptions.userSelection, false);
 
     // FormInput
     initSelect2('#access_lists');
@@ -161,8 +162,8 @@ function initOtherElements() {
     // Init select2 form_duplicate
     $('#modalFormDuplicate').on('hidden.bs.modal', formDuplicateClear);
     initDragableModal('#modalFormDuplicate');
-    initSelect2User('#from_user', "Select", null, false);
-    initSelect2User('#to_user', "Select", null, false);
+    initselect2AjaxCustomOption("#from_user", "Select", `${_baseURL}/options/configs/users`, null, select2TemplateOptions.userResult, select2TemplateOptions.userSelection, false);
+    initselect2AjaxCustomOption("#to_user", "Select", `${_baseURL}/options/configs/users`, null, select2TemplateOptions.userResult, select2TemplateOptions.userSelection, false);
     initSelect2('#exclude_accesses');
 
     // form edit access
@@ -481,6 +482,7 @@ function formDuplicateClear() {
 async function retriveUserAccessses() {
     if (!$('#user').val()) return;
 
+    showProgressButton(true, '#refresh');
     showBlockUIElement('#list_datatable');
 
     // ambil data
@@ -490,6 +492,7 @@ async function retriveUserAccessses() {
     if (![200].includes(response.status)) {
         _dataTable.clear().draw();
         // MsgBox.HtmlNotification(refactorErrorMessages(response.data), `${response.status} - ${response.statusText}`);
+        showProgressButton(false, '#refresh');
         showBlockUIElement('#list_datatable', false);
         return;
     }
@@ -498,6 +501,7 @@ async function retriveUserAccessses() {
     _dataTable.clear();
     _dataTable.rows.add(response.data.data).search($('input[type="search"]').val()).draw();
     _datatableClearSelectedValues();
+    showProgressButton(false, '#refresh');
     showBlockUIElement('#list_datatable', false);
 }
 

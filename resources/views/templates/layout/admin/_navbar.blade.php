@@ -1,7 +1,7 @@
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light border-1">
     <ul class="navbar-nav">
-        <li class="nav-item d-none">
+        <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="javascript:;" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
@@ -33,6 +33,7 @@
                 <a href="{{ route('change-profile') }}" class="dropdown-item">
                     <i class="fas fa-user mr-2"></i> Profile
                 </a>
+                <div class="dropdown-divider"></div>
                 <a href="{{ route('change-password') }}" class="dropdown-item">
                     <i class="fas fa-key mr-2"></i> Change Password
                 </a>

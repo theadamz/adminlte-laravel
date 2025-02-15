@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/sign-in-history', [\App\Http\Controllers\Account\ProfileController::class, 'datatableSignInHistory'])->name('sign-in-history');
+Route::get('/sign-in-history', [\App\Http\Controllers\Account\ProfileController::class, 'datatableSignInHistory'])->name('dt.sign-in-history');
 
 // config
 Route::prefix('/configs')->group(function () {

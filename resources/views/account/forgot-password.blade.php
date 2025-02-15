@@ -28,7 +28,7 @@
     <!--select2-->
     <link rel="stylesheet" href="{{ url('assets/vendor/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet"
-        href="{{ url('assets/vendor/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+          href="{{ url('assets/vendor/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     @vite([])
 </head>
 
@@ -38,7 +38,7 @@
             <div class="w-25">
                 @if ($errors->any())
                     <div class="alert alert-warning alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="alert">×</button>
                         <h5><i class="icon fas fa-exclamation-triangle"></i> Warning!</h5>
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -49,7 +49,7 @@
                 @endif
                 @if (Session::has('message'))
                     <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="alert">×</button>
                         <h5><i class="icon fas fa-check"></i> Reset Link sent!</h5>
                         {{ Session::get('message') }}
                     </div>
@@ -63,24 +63,24 @@
                     </div>
                     <div class="card-body">
                         <form action="{{ route('password.email') }}" method="post" id="formForgotPassword"
-                            name="formForgotPassword">
+                              name="formForgotPassword">
                             @csrf
                             <div class="form-group fv-row">
                                 <label class="form-label font-weight-normal mb-1">Email <span
-                                        class="text-danger">*</span></label>
+                                          class="text-danger">*</span></label>
                                 <input type="email" id="email" name="email"
-                                    class="form-control font-weight-normal @error('email') is-invalid @enderror"
-                                    placeholder="Email" value="{{ old('email') ?? '' }}" maxlength="255"
-                                    autocomplete="off" autofocus />
+                                       class="form-control font-weight-normal @error('email') is-invalid @enderror"
+                                       placeholder="Email" value="{{ old('email') ?? '' }}" maxlength="255"
+                                       autocomplete="off" autofocus />
                                 <small class="text-muted">Please check your mail after sucess send link
                                     verification</small>
                             </div>
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold"
-                                    id="send" name="send">
+                                        id="send" name="send">
                                     <span class="indicator-label"><i class="fas fa-paper-plane mr-2"></i> Send</span>
                                     <span class="indicator-progress d-none">
-                                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                        <span class="spinner-border spinner-border-sm"></span>
                                     </span>
                                 </button>
                             </div>
@@ -104,8 +104,7 @@
         <script src="{{ url('assets/vendor/plugins/jquery-validation/additional-methods.min.js') }}"></script>
         @if (config('setting.local.locale_short') !== 'en')
             <script
-                src="{{ url('assets/vendor/plugins/jquery-validation/localization/messages_' . config('setting.local.locale_short') . '.min.js') }}">
-            </script>
+                    src="{{ url('assets/vendor/plugins/jquery-validation/localization/messages_' . config('setting.local.locale_short') . '.min.js') }}"></script>
         @endif
         <!--alert-->
         <script src="{{ url('assets/vendor/plugins/sweetalert2/sweetalert2.min.js') }}"></script>

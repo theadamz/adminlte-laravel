@@ -28,7 +28,7 @@
     <!--select2-->
     <link rel="stylesheet" href="{{ url('assets/vendor/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet"
-        href="{{ url('assets/vendor/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+          href="{{ url('assets/vendor/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     @vite([])
 </head>
 
@@ -38,7 +38,7 @@
             <div class="w-25">
                 @if ($errors->any())
                     <div class="alert alert-warning alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="alert">×</button>
                         <h5><i class="icon fas fa-exclamation-triangle"></i> Warning!</h5>
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -56,37 +56,37 @@
                     </div>
                     <div class="card-body">
                         <form action="{{ route('password.update') }}" method="post" id="formResetPassword"
-                            name="formResetPassword">
+                              name="formResetPassword">
                             @csrf
                             <input type="hidden" value="{{ $token }}" id="token" name="token" />
                             <input type="hidden" value="{{ $email }}" id="email" name="email" />
                             <div class="form-group fv-row">
                                 <label class="form-label font-weight-normal mb-1">Password <span
-                                        class="text-danger">*</span></label>
+                                          class="text-danger">*</span></label>
                                 <input type="password" placeholder="Password" id="password" name="password"
-                                    maxlength="255" autocomplete="off" value="{{ old('password') ?? '' }}"
-                                    class="form-control @error('password') is-invalid @enderror">
+                                       maxlength="255" autocomplete="off" value="{{ old('password') ?? '' }}"
+                                       class="form-control @error('password') is-invalid @enderror">
                                 @error('password')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group fv-row mb-5">
                                 <label class="form-label font-weight-normal mb-1">Confirm Password <span
-                                        class="text-danger">*</span></label>
+                                          class="text-danger">*</span></label>
                                 <input type="password" placeholder="Password" id="password_confirmation"
-                                    name="password_confirmation" maxlength="255" autocomplete="off"
-                                    value="{{ old('password_confirmation') ?? '' }}"
-                                    class="form-control @error('password_confirmation ') is-invalid @enderror">
+                                       name="password_confirmation" maxlength="255" autocomplete="off"
+                                       value="{{ old('password_confirmation') ?? '' }}"
+                                       class="form-control @error('password_confirmation ') is-invalid @enderror">
                                 @error('password_confirmation ')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-success btn-block font-weight-bold" id="save"
-                                    name="save">
+                                        name="save">
                                     <span class="indicator-label"> Save</span>
                                     <span class="indicator-progress d-none">
-                                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                        <span class="spinner-border spinner-border-sm"></span>
                                     </span>
                                 </button>
                             </div>
@@ -110,8 +110,7 @@
         <script src="{{ url('assets/vendor/plugins/jquery-validation/additional-methods.min.js') }}"></script>
         @if (config('setting.local.locale_short') !== 'en')
             <script
-                src="{{ url('assets/vendor/plugins/jquery-validation/localization/messages_' . config('setting.local.locale_short') . '.min.js') }}">
-            </script>
+                    src="{{ url('assets/vendor/plugins/jquery-validation/localization/messages_' . config('setting.local.locale_short') . '.min.js') }}"></script>
         @endif
         <!--alert-->
         <script src="{{ url('assets/vendor/plugins/sweetalert2/sweetalert2.min.js') }}"></script>

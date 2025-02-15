@@ -97,7 +97,86 @@ class WarehouseLocationController extends Controller
         return response()->json(["message" => "Data successfully created."])->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function storeImport(Request $request, OpenSpoutHelper $openSpout, string $warehouseId): JsonResponse
+    public function show(string $warehouseId, string $id): JsonResponse
+    {
+        // validate parameter
+        $validated = Validator::make(['id' => $id], [
+            'id' => ['required', "uuid", Rule::exists("warehouse_locations", 'id')->where('warehouse_id', $warehouseId)],
+        ])->validated();
+
+        // get data
+        $data = WarehouseLocation::where('id', $validated['id'])->where('warehouse_id', $warehouseId)->select(['code', 'name', 'description', 'is_active'])->first();
+
+        // if data empty
+        if (empty($data)) {
+            throw new HttpResponseException(response([
+                "message" => "Data not found.",
+            ], Response::HTTP_NOT_FOUND));
+        }
+
+        return response()->json(['message' => Response::$statusTexts[Response::HTTP_OK], 'data' => $data])->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function update(WarehouseLocationRequest $request): JsonResponse
+    {
+        // validate request
+        $validated = $request->validated();
+
+        // check for duplicate
+        $exist = WarehouseLocation::where(function (Builder $query) use ($validated) {
+            $query->whereRaw('LOWER(code)=?', [str($validated['code'])->lower()]);
+        })->where('warehouse_id', $validated['warehouse'])->where('id', '!=', $validated['id'])->exists();
+
+        // if exist then
+        if ($exist) {
+            throw new HttpResponseException(response([
+                "errors" => [
+                    "code" => [
+                        "code already exist."
+                    ],
+                ],
+                "message" => Response::$statusTexts[Response::HTTP_CONFLICT],
+            ], Response::HTTP_CONFLICT));
+        }
+
+        // update
+        $data = WarehouseLocation::find($validated['id']);
+        $data->fill($validated);
+        $data->warehouse_id = $validated['warehouse'];
+        $data->save();
+
+        return response()->json(["message" => "Data successfully saved."])->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function destroy(Request $request, string $warehouseId): JsonResponse
+    {
+        // handle input
+        $ids = str($request->post('id'))->isJson() ? json_decode($request->post('id'), true) : $request->post('id');
+        $input = [
+            'warehouse' => $warehouseId,
+            'ids' => $ids,
+        ];
+
+        // validate request
+        $validated = Validator::make($input, [
+            'warehouse' => ['required', "uuid", Rule::exists('warehouses', 'id')],
+            'ids' => ['required', "array"],
+            'ids.*' => ['required', "uuid", Rule::exists('warehouse_locations', 'id')->where('warehouse_id', $warehouseId)],
+        ])->validated();
+
+        try {
+            WarehouseLocation::whereIn('id', $validated['ids'])->delete();
+
+            return response()->json(["message" => count($validated['ids']) . " data successfully deleted."])->setStatusCode(Response::HTTP_OK);
+        } catch (\Exception $e) {
+            // throw error
+            throw new HttpResponseException(response([
+                "message" => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR));
+        }
+    }
+
+    public function import(Request $request, OpenSpoutHelper $openSpout, string $warehouseId): JsonResponse
     {
         // Prepare input
         $input = [
@@ -117,20 +196,20 @@ class WarehouseLocationController extends Controller
             $file->storeAs(config('setting.other.path_to_temp'), $file->hashName());
 
             // construct the full path for reading the file
-            $filePath = storage_path('app/' . config('setting.other.path_to_temp') . '/' . $file->hashName());
+            $filePath = config('setting.other.path_to_temp') . '/' . $file->hashName();
 
             // Check if the file exists
-            if (!file_exists($filePath)) {
+            if (!Storage::disk('local')->exists($filePath)) {
                 throw new HttpResponseException(response([
                     "message" => 'Uploaded file does not exist at the expected path.',
                 ], Response::HTTP_NOT_FOUND));
             }
 
             // Read the Excel file
-            $rows = $openSpout->readFileExcel(filePath: $filePath, sheetName: "DATA", useFirstRowAsKeyName: true);
+            $rows = $openSpout->readFileExcel(filePath: Storage::disk('local')->path($filePath), sheetName: "DATA", useFirstRowAsKeyName: true);
 
             // Delete the file after reading
-            Storage::delete(config('setting.other.path_to_temp') . '/' . $file->hashName());
+            Storage::disk('local')->delete($filePath);
 
             // If rows are empty
             if (empty($rows)) {
@@ -228,85 +307,6 @@ class WarehouseLocationController extends Controller
         }
     }
 
-    public function show(string $warehouseId, string $id): JsonResponse
-    {
-        // validate parameter
-        $validated = Validator::make(['id' => $id], [
-            'id' => ['required', "uuid", Rule::exists("warehouse_locations", 'id')->where('warehouse_id', $warehouseId)],
-        ])->validated();
-
-        // get data
-        $data = WarehouseLocation::where('id', $validated['id'])->where('warehouse_id', $warehouseId)->select(['code', 'name', 'description', 'is_active'])->first();
-
-        // if data empty
-        if (empty($data)) {
-            throw new HttpResponseException(response([
-                "message" => "Data not found.",
-            ], Response::HTTP_NOT_FOUND));
-        }
-
-        return response()->json(['message' => Response::$statusTexts[Response::HTTP_OK], 'data' => $data])->setStatusCode(Response::HTTP_OK);
-    }
-
-    public function update(WarehouseLocationRequest $request): JsonResponse
-    {
-        // validate request
-        $validated = $request->validated();
-
-        // check for duplicate
-        $exist = WarehouseLocation::where(function (Builder $query) use ($validated) {
-            $query->whereRaw('LOWER(code)=?', [str($validated['code'])->lower()]);
-        })->where('warehouse_id', $validated['warehouse'])->where('id', '!=', $validated['id'])->exists();
-
-        // if exist then
-        if ($exist) {
-            throw new HttpResponseException(response([
-                "errors" => [
-                    "code" => [
-                        "code already exist."
-                    ],
-                ],
-                "message" => Response::$statusTexts[Response::HTTP_CONFLICT],
-            ], Response::HTTP_CONFLICT));
-        }
-
-        // update
-        $data = WarehouseLocation::find($validated['id']);
-        $data->fill($validated);
-        $data->warehouse_id = $validated['warehouse'];
-        $data->save();
-
-        return response()->json(["message" => "Data successfully saved."])->setStatusCode(Response::HTTP_OK);
-    }
-
-    public function destroy(Request $request, string $warehouseId): JsonResponse
-    {
-        // handle input
-        $ids = str($request->post('id'))->isJson() ? json_decode($request->post('id'), true) : $request->post('id');
-        $input = [
-            'warehouse' => $warehouseId,
-            'ids' => $ids,
-        ];
-
-        // validate request
-        $validated = Validator::make($input, [
-            'warehouse' => ['required', "uuid", Rule::exists('warehouses', 'id')],
-            'ids' => ['required', "array"],
-            'ids.*' => ['required', "uuid", Rule::exists('warehouse_locations', 'id')->where('warehouse_id', $warehouseId)],
-        ])->validated();
-
-        try {
-            WarehouseLocation::whereIn('id', $validated['ids'])->delete();
-
-            return response()->json(["message" => count($validated['ids']) . " data successfully deleted."])->setStatusCode(Response::HTTP_OK);
-        } catch (\Exception $e) {
-            // throw error
-            throw new HttpResponseException(response([
-                "message" => $e->getMessage(),
-            ], Response::HTTP_INTERNAL_SERVER_ERROR));
-        }
-    }
-
     public function export(Request $request, OpenSpoutHelper $openSpout, string $warehouseId): JsonResponse
     {
         // prepare input
@@ -345,7 +345,7 @@ class WarehouseLocationController extends Controller
 
         // variables
         $fileName = now()->format('YmdHis') . "_basics_warehouse_locations.xlsx";
-        $url = route('download-temp-file', ['fileNameEncoded' => base64_encode($fileName)]);
+        $fileNameWithPath = config('setting.other.path_to_temp') . '/' . $fileName;
 
         // columns header
         $columns = [
@@ -358,11 +358,14 @@ class WarehouseLocationController extends Controller
         ];
 
         $openSpout->generateXlsx(
-            filePath: config('setting.other.path_to_temp') . '/' . $fileName,
+            filePath: Storage::disk('local')->path($fileNameWithPath),
             columns: $columns,
             records: $records,
             useNumberFirstRow: true,
         );
+
+        // generate url
+        $url = route('download-temp-file', ['fileNameEncoded' => base64_encode($fileName)]);
 
         return response()->json(["url" => $url])->setStatusCode(Response::HTTP_OK);
     }
@@ -385,7 +388,7 @@ class WarehouseLocationController extends Controller
         ];
         $data['columnDefinitions'] = [];
         $data['columnOrders'] = [];
-        $data['jsFile'] = Vite::asset('resources/js/pages/lov/common.js');
+        $data['jsFile'] = 'resources/js/pages/lov/common.js';
 
         return view('lov.common')->with(compact('data'));
     }

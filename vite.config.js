@@ -1,6 +1,8 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
 import fs from 'fs';
+import laravel from 'laravel-vite-plugin';
+import {
+    defineConfig
+} from 'vite';
 
 const populateFiles = async (srcDir, type) => {
     // Variables
@@ -41,13 +43,13 @@ const populateFiles = async (srcDir, type) => {
 const inputFiles = async function () {
     const jsPageFiles = await populateFiles('resources/js', 'js');
     const cssPageFiles = await populateFiles('resources/css', 'css');
-    return [ ...cssPageFiles, ...jsPageFiles];
+    return [...cssPageFiles, ...jsPageFiles];
 }
 
 export default defineConfig({
     plugins: [
         laravel({
-            hotFile: 'storage/vite.hot',
+            hotFile: 'public/vite.hot',
             buildDirectory: 'assets/pages',
             input: await inputFiles(),
             refresh: [{

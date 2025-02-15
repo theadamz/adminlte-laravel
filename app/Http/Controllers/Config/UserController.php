@@ -335,7 +335,7 @@ class UserController extends Controller
         ];
         $data['columnDefinitions'] = [];
         $data['columnOrders'] = [];
-        $data['jsFile'] = Vite::asset('resources/js/pages/lov/common.js');
+        $data['jsFile'] = 'resources/js/pages/lov/common.js';
 
         return view('lov.common')->with(compact('data'));
     }

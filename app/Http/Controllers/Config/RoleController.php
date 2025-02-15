@@ -18,9 +18,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View
     {
         // js
@@ -41,9 +38,6 @@ class RoleController extends Controller
         return DataTables::eloquent($queries)->toJson();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(RoleRequest $request)
     {
         // validate request
@@ -74,9 +68,6 @@ class RoleController extends Controller
         return response()->json(["message" => "Data successfully created."])->setStatusCode(Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         // validate parameter
@@ -97,9 +88,6 @@ class RoleController extends Controller
         return response()->json(['message' => Response::$statusTexts[Response::HTTP_OK], 'data' => $data])->setStatusCode(Response::HTTP_OK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(RoleRequest $request, string $id)
     {
         // validate request
@@ -131,9 +119,6 @@ class RoleController extends Controller
         return response()->json(["message" => "Role successfully saved."])->setStatusCode(Response::HTTP_OK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request)
     {
         // handle input

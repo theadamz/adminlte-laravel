@@ -28,7 +28,7 @@
     <!--select2-->
     <link rel="stylesheet" href="{{ url('assets/vendor/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet"
-        href="{{ url('assets/vendor/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+          href="{{ url('assets/vendor/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     @vite([])
 </head>
 
@@ -38,7 +38,7 @@
             <div class="w-50">
                 @if (Session::has('notification'))
                     <div class="alert alert-{{ Session::get('notification')['type'] }} alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="alert">×</button>
                         <h5><i class="icon {{ Session::get('notification')['icon'] }}"></i>
                             {{ Session::get('notification')['title'] }}</h5>
                         {{ Session::get('notification')['message'] }}
@@ -56,56 +56,56 @@
                             @csrf
                             <div class="form-group fv-row">
                                 <label class="form-label font-weight-normal mb-1">Email <span
-                                        class="text-danger">*</span></label>
+                                          class="text-danger">*</span></label>
                                 <input type="email" id="email" name="email"
-                                    class="form-control font-weight-normal @error('email') is-invalid @enderror"
-                                    placeholder="Email" value="{{ old('email') ?? '' }}" maxlength="255"
-                                    autocomplete="off" autofocus />
+                                       class="form-control font-weight-normal @error('email') is-invalid @enderror"
+                                       placeholder="Email" value="{{ old('email') ?? '' }}" maxlength="255"
+                                       autocomplete="off" autofocus />
                                 @error('email')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group fv-row">
                                 <label class="form-label font-weight-normal mb-1">Name <span
-                                        class="text-danger">*</span></label>
+                                          class="text-danger">*</span></label>
                                 <input type="text" id="name" name="name"
-                                    class="form-control font-weight-normal @error('name') is-invalid @enderror"
-                                    placeholder="Name" value="{{ old('name') ?? '' }}" maxlength="255"
-                                    autocomplete="off" autofocus />
+                                       class="form-control font-weight-normal @error('name') is-invalid @enderror"
+                                       placeholder="Name" value="{{ old('name') ?? '' }}" maxlength="255"
+                                       autocomplete="off" autofocus />
                                 @error('name')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group fv-row">
                                 <label class="form-label font-weight-normal mb-1">Password <span
-                                        class="text-danger">*</span></label>
+                                          class="text-danger">*</span></label>
                                 <input type="password" placeholder="Password" id="password" name="password"
-                                    maxlength="255" autocomplete="off" value="{{ old('password') ?? '' }}"
-                                    class="form-control @error('password') is-invalid @enderror">
+                                       maxlength="255" autocomplete="off" value="{{ old('password') ?? '' }}"
+                                       class="form-control @error('password') is-invalid @enderror">
                                 @error('password')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group fv-row mb-5">
                                 <label class="form-label font-weight-normal mb-1">Confirm Password <span
-                                        class="text-danger">*</span></label>
+                                          class="text-danger">*</span></label>
                                 <input type="password" placeholder="Password" id="password_confirmation"
-                                    name="password_confirmation" maxlength="255" autocomplete="off"
-                                    value="{{ old('password_confirmation') ?? '' }}"
-                                    class="form-control @error('password_confirmation ') is-invalid @enderror">
+                                       name="password_confirmation" maxlength="255" autocomplete="off"
+                                       value="{{ old('password_confirmation') ?? '' }}"
+                                       class="form-control @error('password_confirmation ') is-invalid @enderror">
                                 @error('password_confirmation ')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group fv-row">
                                 <label class="form-label font-weight-normal mb-1">Timezone <span
-                                        class="text-danger">*</span></label>
+                                          class="text-danger">*</span></label>
                                 <select class="form-control font-weight-normal form-select2" id="timezone"
-                                    name="timezone" data-allow-clear="false">
+                                        name="timezone" data-allow-clear="false">
                                     <option value=""></option>
                                     @foreach ($timezones as $timezone)
                                         <option
-                                            value="{{ $timezone['value'] }}"{{ old('timezone') === $timezone['value'] ? 'selected' : '' }}>
+                                                value="{{ $timezone['value'] }}"{{ old('timezone') === $timezone['value'] ? 'selected' : '' }}>
                                             {{ $timezone['text'] }}</option>
                                     @endforeach
                                 </select>
@@ -115,10 +115,10 @@
                             </div>
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-outline-success btn-block font-weight-bold"
-                                    id="signUp" name="signUp">
+                                        id="signUp" name="signUp">
                                     <span class="indicator-label"><i class="fas fa-edit mr-2"></i> Sign Up</span>
                                     <span class="indicator-progress d-none">
-                                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                        <span class="spinner-border spinner-border-sm"></span>
                                     </span>
                                 </button>
                             </div>
@@ -142,8 +142,7 @@
         <script src="{{ url('assets/vendor/plugins/jquery-validation/additional-methods.min.js') }}"></script>
         @if (config('setting.local.locale_short') !== 'en')
             <script
-                src="{{ url('assets/vendor/plugins/jquery-validation/localization/messages_' . config('setting.local.locale_short') . '.min.js') }}">
-            </script>
+                    src="{{ url('assets/vendor/plugins/jquery-validation/localization/messages_' . config('setting.local.locale_short') . '.min.js') }}"></script>
         @endif
         <!--alert-->
         <script src="{{ url('assets/vendor/plugins/sweetalert2/sweetalert2.min.js') }}"></script>

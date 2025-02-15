@@ -1,10 +1,12 @@
 import {
     axiosCustom,
-    initselect2AjaxCustomOption,
     loadingProcess,
     MsgBox,
     refactorErrorMessages
 } from "./general.js";
+import {
+    lovCommonInitialize
+} from "./pages/lov/common.js";
 
 export async function clearCache() {
     const confirmation = await MsgBox.Confirm('clear cache?').catch(err => {
@@ -80,8 +82,30 @@ export async function fillOptionsFromAjax(elementId, url, selectedId = null, sel
     }
 }
 
-export function initSelect2User(elementId, placeholder = "Select", minimumInputLength = 2, allowClear = true) {
-    const userTemplateResult = function (item) {
+export const select2TemplateOptions = {
+    defaultResult: (item) => {
+        if (item.id && item.text) {
+            return item.text;
+        }
+
+        if (!item.id) {
+            return item.text;
+        }
+
+        return `${item.name}`;
+    },
+    defaultSelection: (item) => {
+        if (item.id && item.text) {
+            return item.text;
+        }
+
+        if (!item.id) {
+            return item.text;
+        }
+
+        return `${item.name}`;
+    },
+    userResult: (item) => {
         // still loading
         if (!item.id) {
             return item.text;
@@ -91,9 +115,23 @@ export function initSelect2User(elementId, placeholder = "Select", minimumInputL
                     <span class="font-weight-bold">${item.name}</span>
                     <span class="font-weight-light">${item.email}</span>
                 </div>`
-    }
+    },
+    userSelection: (item) => {
+        if (item.id && item.text) {
+            return item.text;
+        }
 
-    const userTemplateSelection = function (item) {
+        if (!item.id) {
+            return item.text;
+        }
+
+        return `${item.name}`;
+    },
+    userSelectionNameEmail: (item) => {
+        if (item.id && item.text) {
+            return item.text;
+        }
+
         if (!item.id) {
             return item.text;
         }
@@ -102,7 +140,88 @@ export function initSelect2User(elementId, placeholder = "Select", minimumInputL
                     <span class="font-weight-bold mr-1">${item.name}</span>
                     <span class="font-weight-light">(${item.email})</span>
                 </div>`;
-    }
+    },
+}
 
-    initselect2AjaxCustomOption(elementId, placeholder, `${_baseURL}/options/configs/users`, minimumInputLength, userTemplateResult, userTemplateSelection, allowClear);
+export const lovCommon = {
+    data: {},
+    init: ({
+        url,
+        buttonOpenLOVElement = null,
+        buttonClearLOVElement = null,
+        hiddenElement,
+        captionElement,
+        descriptionElement = null,
+        dependencyElement = null,
+        hiddenColumnName = 'id',
+        captionColumnName = 'name',
+        descriptionColumnName = 'description',
+        modalSize = 'modal-lg'
+    }) => {
+        buttonOpenLOVElement = buttonOpenLOVElement ? buttonOpenLOVElement : `${hiddenElement}LOV`
+        document.querySelector(`${buttonOpenLOVElement}`).addEventListener('click', function () {
+            if (dependencyElement) {
+                if (!$(`${dependencyElement}`).val()) return;
+            }
+
+            lovCommon.load({
+                url: url,
+                hiddenElement: hiddenElement,
+                captionElement: captionElement,
+                descriptionElement: descriptionElement,
+                hiddenColumnName: hiddenColumnName,
+                captionColumnName: captionColumnName,
+                descriptionColumnName: descriptionColumnName,
+                modalSize: modalSize
+            });
+        });
+
+        if (buttonClearLOVElement) {
+            document.querySelector(`${buttonClearLOVElement}`).addEventListener('click', function () {
+                lovCommon.clearElements();
+            });
+        }
+    },
+    load: ({
+        url,
+        hiddenElement,
+        captionElement,
+        descriptionElement = null,
+        hiddenColumnName = 'id',
+        captionColumnName = 'name',
+        descriptionColumnName = 'description',
+        modalSize = 'modal-lg'
+    }) => {
+        loadingProcess();
+        $('#_dynamic_content').load(`${url}`, () => {
+            loadingProcess(false);
+            $('#_modal_lov').modal('show');
+            $(".modal-dialog").addClass(`${modalSize}`);
+            lovCommonInitialize();
+
+            $('#_modal_lov').on('hide.bs.modal', function () {
+                if ($resultFromLOV.result) {
+                    if (lovCommon.data[hiddenColumnName] == $resultFromLOV.data[hiddenColumnName]) return;
+                    lovCommon.data[hiddenColumnName] = $resultFromLOV.data[hiddenColumnName];
+
+                    $(`${hiddenElement}`).val($resultFromLOV.data[hiddenColumnName]);
+                    $(`${captionElement}`).val($resultFromLOV.data[captionColumnName]);
+                    if (descriptionElement) {
+                        $(`${descriptionElement}`).text($resultFromLOV.data[descriptionColumnName]);
+                    }
+                }
+            });
+        });
+    },
+    clearElements: ({
+        hiddenElement,
+        captionElement,
+        descriptionElement
+    }) => {
+        $(`${hiddenElement}`).val(null)
+        $(`${captionElement}`).val(null);
+        if (descriptionElement) {
+            $(`${descriptionElement}`).text(null);
+        }
+    }
 }

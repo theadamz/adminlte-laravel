@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // custom vite
-        Vite::useHotFile(storage_path('vite.hot'))
+        Vite::useHotFile(public_path('vite.hot'))
             ->useBuildDirectory('assets/pages')
             ->useManifestFilename('assets.json')
             ->withEntryPoints(['resources/js/app.js']);
